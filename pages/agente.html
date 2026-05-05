@@ -60,6 +60,28 @@
             justify-content: center;
         }
 
+        @media (max-width: 520px) {
+            .cabecalho {
+                /* Muda de linha para coluna */
+                flex-direction: column; 
+                
+                /* Centraliza os itens verticalmente agora que estão em coluna */
+                align-items: center; 
+                
+                /* Adiciona um espaço entre o título e os botões */
+                gap: 15px; 
+                
+                /* Garante que o padding não aperte demais em telas minúsculas */
+                padding: 20px 10px; 
+            }
+
+            .grupo-botoes {
+                /* Se quiser que os botões também ocupem a largura toda ou se ajustem */
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         .area-mensagens {
             flex: 1;
             padding: 20px;

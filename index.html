@@ -7,13 +7,35 @@
     <title>Nave do Conhecimento | Site Fictício</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+      body {
+        font-family: 'Atkinson Hyperlegible', sans-serif;
+        margin: 0;
+        padding: 0;
+        /* Substitua pelo link da sua imagem */
+        background-image: url('images/indexNaveConhecimento.png'); 
+        
+        /* Faz a imagem cobrir toda a área disponível sem distorcer */
+        background-size: cover; 
+        
+        /* Centraliza a imagem */
+        background-position: center; 
+        
+        /* Impede que a imagem se repita se a tela for muito grande */
+        background-repeat: no-repeat; 
+        
+        /* Mantém a imagem fixa enquanto você rola a página (opcional) */
+        background-attachment: fixed; 
+        
+        /* Garante que o body ocupe toda a altura da tela */
+        height: 100vh;
+      }
+    </style>
   </head>
 
   <body>
-  
-    <img src="images/indexNaveConhecimento.png" alt="Site Fictício" style="width:100%; height: auto;">
-
-    <a href="pages/agente.html" target="_blank" class="botao-agente"><img src="images/Agente Nicole - Conversar.png" alt="Conversar com a Agente Nicole" style="z-index: 2;position: fixed;top: calc(100vh - 30%);right: calc(100vw - 99%);"></a>
+    <a href="pages/agente.html" class="botao-agente"><img src="images/Agente Nicole - Conversar.png" alt="Conversar com a Agente Nicole" style="position: fixed; bottom: 10px; right: 10px; object-fit: cover; z-index: 9999"></a>
     
   </body>
 </html>
