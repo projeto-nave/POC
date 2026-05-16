@@ -9,11 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     
-    <!--Dei uma arrumada no CSS para não ocupar tanto espaço-->
     <style>
         body { font-family: 'Atkinson Hyperlegible', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background-color: #f4f4f9; }
         .cabecalho { background-color: #0056b3; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .titulo-nicole { font-size: 1.5rem; font-weight: bold; margin: 0; background-color: rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 50px;  display: flex; align-items: center; }
+        .titulo-nicole { font-size: 1.5rem; font-weight: bold; margin: 0; background-color: rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 50px; display: flex; align-items: center; }
         .btn-cabecalho { background: none; border: 2px solid white; color: white; padding: 8px 12px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer; text-decoration: none; }
         
         .area-mensagens { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
@@ -41,10 +40,10 @@
     <div class="cabecalho">
         <div class="titulo-nicole">
             <img src="../images/Agente Nicole.png" alt="Conversando com a Agente Nicole" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 15px;">
-            Astronauta Nicole
+            <span>Astronauta Nicole</span>
         </div>
         <div class="grupo-botoes">
-            <button class="btn-cabecalho" onclick="carregarDialogo('inicio')">↺ Reiniciar</button>
+            <button class="btn-cabecalho" onclick="location.reload()">↺ Reiniciar</button>
             <a href="index.html" class="btn-cabecalho">✖ Sair</a>
         </div>
     </div>
