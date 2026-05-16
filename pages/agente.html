@@ -9,148 +9,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     
+    <!--Dei uma arrumada no CSS para não ocupar tanto espaço-->
     <style>
-        body {
-            font-family: 'Atkinson Hyperlegible', sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #f4f4f9;
-        }
+        body { font-family: 'Atkinson Hyperlegible', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background-color: #f4f4f9; }
+        .cabecalho { background-color: #0056b3; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .titulo-nicole { font-size: 1.5rem; font-weight: bold; margin: 0; background-color: rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 20px; }
+        .btn-cabecalho { background: none; border: 2px solid white; color: white; padding: 8px 12px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer; text-decoration: none; }
+        
+        .area-mensagens { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
+        .balao-nicole { background-color: #e0f0ff; color: #1a1a1a; padding: 15px 20px; border-radius: 20px 20px 20px 0; font-size: 1.3rem; max-width: 90%; align-self: flex-start; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        
+        .area-escolhas { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; margin-bottom: 20px; }
+        .btn-escolha { background-color: #0056b3; color: white; border: none; padding: 12px 20px; border-radius: 20px 20px 0 20px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-family: 'Atkinson Hyperlegible', sans-serif; }
 
-        .cabecalho {
-            background-color: #0056b3;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .titulo-nicole {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .grupo-botoes {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-cabecalho {
-            background: none;
-            border: 2px solid white;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (max-width: 520px) {
-            .cabecalho {
-                /* Muda de linha para coluna */
-                flex-direction: column; 
-                
-                /* Centraliza os itens verticalmente agora que estão em coluna */
-                align-items: center; 
-                
-                /* Adiciona um espaço entre o título e os botões */
-                gap: 15px; 
-                
-                /* Garante que o padding não aperte demais em telas minúsculas */
-                padding: 20px 10px; 
-            }
-
-            .grupo-botoes {
-                /* Se quiser que os botões também ocupem a largura toda ou se ajustem */
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        .area-mensagens {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .balao-nicole {
-            background-color: #e0f0ff;
-            color: #1a1a1a;
-            padding: 15px 20px;
-            border-radius: 20px 20px 20px 0;
-            font-size: 1.3rem;
-            max-width: 85%;
-            align-self: flex-start;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .rodape {
-            background-color: white;
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        }
-
-        .caixa-texto {
-            flex: 1;
-            padding: 15px;
-            font-size: 1.2rem;
-            border: 2px solid #ccc;
-            border-radius: 25px;
-            font-family: 'Atkinson Hyperlegible', sans-serif;
-        }
-
-        .btn-microfone {
-            background-color: #d9534f;
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 1.8rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            flex-shrink: 0;
-            transition: all 0.3s;
-        }
-
-        .btn-microfone.gravando {
-            background-color: #c9302c;
-            animation: pulsar 1.5s infinite;
-        }
+        .rodape { background-color: white; padding: 15px; display: flex; gap: 10px; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
+        .caixa-texto { flex: 1; padding: 15px; font-size: 1.2rem; border: 2px solid #ccc; border-radius: 25px; font-family: 'Atkinson Hyperlegible', sans-serif; }
+        
+        .btn-enviar { background-color: #0056b3; color: white; border: none; width: 55px; height: 55px; border-radius: 50%; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; }
+        .btn-microfone { background-color: #d9534f; color: white; border: none; width: 55px; height: 55px; border-radius: 50%; font-size: 1.6rem; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0; transition: all 0.3s; }
+        .btn-microfone.gravando { background-color: #c9302c; animation: pulsar 1.5s infinite; }
 
         @keyframes pulsar {
-            0% {
-                box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 20px rgba(217, 83, 79, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(217, 83, 79, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(217, 83, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0); }
         }
     </style>
 </head>
@@ -162,40 +44,184 @@
             Astronauta Nicole
         </div>
         <div class="grupo-botoes">
-            <button class="btn-cabecalho">Reiniciar</button>
-            <a href="../index.html" class="btn-cabecalho">Sair</a>
+            <button class="btn-cabecalho" onclick="carregarDialogo('inicio')">↺ Reiniciar</button>
+            <a href="index.html" class="btn-cabecalho">✖ Sair</a>
         </div>
     </div>
 
     <div class="area-mensagens">
-        <div class="balao-nicole">
-            Olá! Sou a Nicole, sua agente virtual das naves do conhecimento. Como você quer conversar hoje? Pode digitar ou apertar o microfone vermelho para falar!
-        </div>
+        <div class="balao-nicole" id="texto-nicole">Carregando...</div>
+        <div class="area-escolhas" id="botoes-usuario"></div>
     </div>
 
     <div class="rodape">
-        <input type="text" class="caixa-texto" placeholder="Escreva aqui...">
+        <input type="text" id="caixa-texto" class="caixa-texto" placeholder="Escreva aqui...">
+        <button id="btn-enviar" class="btn-enviar">➤</button>
         <button id="botao-mic" class="btn-microfone">🎙️</button>
     </div>
 
     <script>
-        const botaoMic = document.getElementById('botao-mic');
-        
-        let estaGravando = false;
+        const roteiros = {
 
-        botaoMic.addEventListener('click', function() {
+            inicio: {
+                texto: "Você deseja simular a interação da agente com cadastro ou sem cadastro?",
+                opcoes: [
+                    { texto: "Simular com cadastro", proximo: "inicio_com_cadastro" },
+                    { texto: "Simular sem cadastro", proximo: "inicio_sem_cadastro" }
+                ]
+            },
+
+            inicio_sem_cadastro: {
+                texto: "Olá! Que bom te ver por aqui no site da Nave do Conhecimento! 😊 Eu sou a Nicole. Sabia que para aproveitar tudo o que nossas unidades oferecem — como as Lan Tables, a Área Gamer e nossos cursos gratuitos — você precisa ter um cadastro ativo? Sem ele, você só consegue visualizar as notícias por aqui. Antes de continuarmos, para sua segurança e transparência, preciso te explicar: para liberar seu acesso e personalizar sua experiência, vou usar alguns dados básicos, como seu nome e idade. Seus dados são protegidos e usados apenas aqui dentro para melhorar suas sugestões de atividades, e você pode alterar ou excluir essas informações a qualquer momento, combinado? Bora liberar seu acesso para usar a Nave de verdade ou precisa de mais detalhes antes de se cadastrar?",
+                opcoes: [
+                    { texto: "Quero mais detalhes!", proximo: "mais_detalhes_cadastramento" },
+                    { texto: "Realizar Cadastramento", proximo: "fim_da_simulacao" },
+                ]
+            },
             
-            estaGravando = !estaGravando;
+            mais_detalhes_cadastramento: {
+                texto: "Antes de prosseguirmos, pode me informar sua faixa etária?",
+                opcoes: [
+                    { texto: "O Jovem Explorador (0-19 anos)", proximo: "confirmacao_de_maioridade" },
+                    { texto: "O Profissional em Movimento (20-64 anos)", proximo: "o_profissional_em_movimento" },
+                    { texto: "O Cidadão Conectado (65+ anos)", proximo: "o_cidadao_conectado" }
+                ]
+            },
+            
+            confirmacao_de_maioridade: {
+                texto: "Se você tiver menos de 12 anos, eu preciso dar uma pausa rápida. Chama um adulto para me dar um 'ok' aqui na tela e autorizar seu acesso, combinado?",
+                opcoes: [
+                    { texto: "Vou chamar um adulto!", proximo: "requerimento_de_telefone" },
+                    { texto: "Não Cadastrar", proximo: "fim_da_simulacao" }
+                ]
+            },
+            
+            requerimento_de_telefone: {
+                texto: "Perfeito! Para garantir a segurança e a autorização dos responsáveis, preciso que informe o número de telefone de um dos seus responsáveis.",
+                opcoes: [
+                    { texto: "Informar Telefone", proximo: "confirmacao_responsavel" }  
+                ]   
+            },
 
+            confirmacao_responsavel:{
+                texto: "Olá! O(a) [Nome da Criança] deseja realizar um cadastro na Nave do Conhecimento [https://www.navedoconhecimento.rio/]. Para isso, precisamos da sua autorização. Ao autorizar: Será realizado um cadastro para liberar horas ao acesso à Arena eSports e à Área Gamer além de cursos gratuitos rápidos de Robótica, Programação etc. Ao não autorizar: Não será possível utilizar nenhum desses recursos. Você autoriza o acesso à localização?",
+                opcoes: [
+                    {texto: "Sim, autorizo", proximo: "autorizacao_crianca"},
+                    {texto: "Não, não autorizo", proximo: "nao_autorizacao_crianca"}
+                ]
+            },
+
+            autorizacao_crianca: {
+                texto: "Boas notícias, [Nome da Criança]! Seu responsável autorizou! Vamos iniciar logo essa partida ao cadastro?",
+                opcoes:[
+                    {texto:"Cadastrar Agora", proximo: "fim_da_simulacao"},
+                ]
+            },
+
+            nao_autorizacao_crianca: {
+                texto:"Tudo bem, [Nome da Criança]! Seu responsável preferiu não autorizar agora, e não tem problema nenhum nisso. Eu não consigo liberar todos os recursos das Naves para você, mas converse com seus responsáveis melhor sobre esse assunto e volte aqui, combinado?",
+                opcoes:[
+                    {texto:"Voltar para o início", proximo: "inicio_sem_cadastro"},
+                ]
+            },
+
+            o_profissional_em_movimento: {
+                texto: "Olá! Fico feliz em ver seu foco no crescimento profissional. O seu cadastro é o passo fundamental para você garantir sua vaga nos cursos de Empreendedorismo, Informática Avançada e nas nossas Oficinas de Currículo. Com seu perfil ativo, eu consigo ser bem prática e te sugerir atividades que economizam seu tempo e trazem resultados reais para sua carreira ou para o seu negócio! Seus dados são tratados com total transparência e segurança, apenas para melhorar sua experiência aqui",
+                opcoes: [
+                    {texto:"Cadastrar Agora", proximo: "fim_da_simulacao"},   
+                ]
+            },
+
+            o_cidadao_conectado:{
+                texto: "Seja muito bem-vindo(a)! Para que o senhor(a) possa usar nossos computadores com calma e participar das aulas de informática, precisamos fazer um cadastro simples. Eu te ajudo em cada passo! Seus dados estão seguros e são usados apenas para que o senhor(a) possa frequentar a Nave. Posso te ajudar a começar?",
+                opcoes:[
+                    {texto:"Cadastrar Agora", proximo: "fim_da_simulacao"},
+                ]
+            },
+
+            inicio_com_cadastro: {
+                texto: "Olá! Que bom ter você aqui na Nave do Conhecimento. Eu sou a Nicole, sua assistente digital. Aqui é o lugar onde a tecnologia encontra a criatividade: você pode navegar na internet no espaço Lan Table, se divertir em nossa área gamer, aprender uma nova profissão ou tirar dúvidas para ser dono do seu próprio negócio. Para que eu possa te atender do seu jeitinho e mostrar tudo o que já conquistamos juntos, por favor, faça seu login!",
+                opcoes: [
+                    { texto: "Entrar com meu login", proximo: "arquetipo_de_usuario"},
+                ]
+            },
+
+            arquetipo_de_usuario: {
+                texto: "Qual tipo de usuário você quer simular?",
+                opcoes: [
+                    { texto: "O Jovem Explorador (0-19 anos)", proximo: "o_jovem_explorador_cadastrado" },
+                    { texto: "O Profissional em Movimento (20-64 anos)", proximo: "o_profissional_em_movimento_cadastrado" },
+                    { texto: "O Cidadão Conectado (65+ anos)", proximo: "o_cidadao_conectado_cadastrado" }
+                ]
+             },
+
+            o_jovem_explorador_cadastrado: {
+                    texto: "E aí, [Nome]! Pronto para subir de nível hoje? Vi que sua última aventura foi na Área Gamer. Quer continuar de onde parou ou prefere descobrir como criar seus próprios jogos no curso de Programação?",
+                    opcoes:[
+                        {texto:"Explorar a Nave", proximo: "fim_da_simulacao"},
+                    ]
+                },
+
+            o_profissional_em_movimento_cadastrado: {
+                    texto: "Olá, [Nome]. Fico feliz em te ver focado no seu crescimento! Suas últimas interações mostram interesse em Empreendedorismo. Que tal avançarmos hoje na sua oficina de Plano de Negócios (Canvas) para tirar sua ideia do papel?",
+                    opcoes:[
+                        {texto:"Explorar a Nave", proximo: "fim_da_simulacao"},
+                    ]
+            },
+
+            o_cidadao_conectado_cadastrado: {
+                    texto: "Seja muito bem-vindo, Sr(a). [Nome]! É um prazer ter sua companhia novamente. Notei que você concluiu o módulo de Informática Básica. O que deseja fazer hoje? Podemos usar a Lan Table para resolver alguma pendência digital ou começar uma nova aula com calma.",
+                    opcoes:[
+                        {texto:"Explorar a Nave", proximo: "fim_da_simulacao"},
+                    ]
+            },
+
+            fim_da_simulacao: {
+                texto: "Fim da simulação!",
+                opcoes: [
+                    { texto: "Voltar para o início", proximo: "inicio" },
+                ]
+            },
+        };
+
+        function carregarDialogo(chave) {
+            const etapaAtual = roteiros[chave];
+            document.getElementById('texto-nicole').innerText = etapaAtual.texto;
+            const areaBotoes = document.getElementById('botoes-usuario');
+            areaBotoes.innerHTML = '';
+            etapaAtual.opcoes.forEach(opcao => {
+                const botao = document.createElement('button');
+                botao.className = 'btn-escolha';
+                botao.innerText = opcao.texto;
+                botao.onclick = () => carregarDialogo(opcao.proximo);
+                areaBotoes.appendChild(botao);
+            });
+        }
+
+        const botaoMic = document.getElementById('botao-mic');
+        let estaGravando = false;
+        botaoMic.addEventListener('click', function() {
+            estaGravando = !estaGravando;
             if (estaGravando) {
                 botaoMic.classList.add('gravando');
-                botaoMic.innerHTML = '■';
+                botaoMic.innerHTML = '⏹'; 
             } else {
                 botaoMic.classList.remove('gravando');
-                botaoMic.innerHTML = '🎙️';
+                botaoMic.innerHTML = '🎙️'; 
             }
         });
-    </script>
 
+        const btnEnviar = document.getElementById('btn-enviar');
+        const caixaTexto = document.getElementById('caixa-texto');
+
+        btnEnviar.addEventListener('click', function() {
+            if (caixaTexto.value !== "") {
+                alert("Você enviou: " + caixaTexto.value + "\n(isto é apenas uma simulação, o chat não funciona de verdade :p).");
+                caixaTexto.value = "";
+            }
+        });
+
+        window.onload = () => carregarDialogo('inicio');
+    </script>
 </body>
 </html>
