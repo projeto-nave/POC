@@ -6,11 +6,14 @@
 Este repositório contém a demonstração dos itens executados no MVP da **Agente Nicole**, uma Inteligência Artificial Anfitriã desenvolvida pelo **Grupo 10** para as Naves do Conhecimento, Naves Satélite e Navezinhas Cariocas do Programa Agent.IA da Unicarioca.
 
 ## A Equipe
-* **Marina Micas Jardim** - atuação nesse projeto como mentora, gestora, designer e desenvolvedora front-end - Analista de Projetos da Secretaria Municipal de Ciência, Tecnologia e Inovação do Rio de Janeiro (SMCT) - [LinkedIn](https://www.linkedin.com/in/marinamicas/)
-* **Felipe Gijsen Downs** - atuação nesse projeto como desenvolvedor back-end - Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca.
-* **João Pedro Francisco da Rocha** - atuação nesse projeto como desenvolvedor back-end e front-end - Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca.
-* **Milena Jesus** - Atuação como Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo, pesquisa de conformidade com a LGPD e o ECA, e garantia da qualidade e segurança das respostas da inteligência artificial (Nicole) - Aluna do curso de Marketing da Unicarioca.
-* **Lucas Gaspar** - Atuação como Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo e garantia da qualidade das respostas da inteligência artificial (Nicole) - Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca.
+
+| Nome | Atuação nesse projeto | Cargo e local | Contato |
+| :--- | :--- | :--- | :--- |
+| **Marina Micas Jardim** | Mentora, gestora, designer e desenvolvedora front-end. | Analista de Projetos da Secretaria Municipal de Ciência, Tecnologia e Inovação do Rio de Janeiro (SMCT). | [LinkedIn](https://www.linkedin.com/in/marinamicas/) |
+| **Felipe Gijsen Downs** | Desenvolvedor back-end. | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | xxx |
+| **João Pedro Francisco da Rocha** | Desenvolvedor back-end e front-end. | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | xxx |
+| **Milena Jesus** | Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo, pesquisa de conformidade com a LGPD e o ECA, e garantia da qualidade e segurança das respostas da inteligência artificial (Nicole). | Aluna do curso de Marketing da Unicarioca. | xxx |
+| **Lucas Gaspar** | Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo e garantia da qualidade das respostas da inteligência artificial (Nicole). | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | xxx |
 
 ## O Problema
 Atualmente, há um baixo aproveitamento dos recursos das Naves devido a dificuldades de divulgação e graves barreiras de letramento tecnológico, o que acaba afastando o cidadão dos serviços digitais disponíveis.
