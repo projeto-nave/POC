@@ -13,30 +13,265 @@
         font-family: 'Atkinson Hyperlegible', sans-serif;
         margin: 0;
         padding: 0;
-        /* Substitua pelo link da sua imagem */
         background-image: url('images/indexNaveConhecimento.png'); 
-        
-        /* Faz a imagem cobrir toda a área disponível sem distorcer */
         background-size: cover; 
-        
-        /* Centraliza a imagem */
         background-position: center; 
-        
-        /* Impede que a imagem se repita se a tela for muito grande */
         background-repeat: no-repeat; 
-        
-        /* Mantém a imagem fixa enquanto você rola a página (opcional) */
         background-attachment: fixed; 
-        
-        /* Garante que o body ocupe toda a altura da tela */
         height: 100vh;
+      }
+
+      /* Media Query para alterar a imagem de fundo no celular */
+      @media (max-width: 992px) {
+        body {
+          background-image: url('images/indexNaveConhecimento _ Celular.png');
+          background-position: center top;
+        }
+      }
+
+      /* Animação de pulsar com o efeito neon */
+      @keyframes pulsar-neon {
+        0% {
+          filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) 
+                  drop-shadow(0 0 10px rgba(255, 159, 36, 0.4));
+          transform: scale(1);
+        }
+        50% {
+          filter: drop-shadow(0 0 10px #ff9f24) 
+                  drop-shadow(0 0 20px #ff9f24) 
+                  drop-shadow(0 0 30px #ff9f24);
+          transform: scale(1.05);
+        }
+        100% {
+          filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) 
+                  drop-shadow(0 0 10px rgba(255, 159, 36, 0.4));
+          transform: scale(1);
+        }
+      }
+
+      /* Botão Flutuante da Agente com ID para manipulação */
+      .botao-agente {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        z-index: 9999;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .imagem-agente {
+        width: 150px;
+        display: block;
+        animation: pulsar-neon 2.5s infinite ease-in-out;
+      }
+
+      .botao-agente:hover .imagem-agente {
+        animation: none;
+        filter: drop-shadow(0 0 15px #ff9f24) 
+                drop-shadow(0 0 30px #ff9f24);
+        transform: scale(1.1);
+      }
+
+      /* ========================================================
+         ESTILIZAÇÃO DA JANELA FLUTUANTE (TEMA CLARO - #FAFAFA)
+         ======================================================== */
+      
+      .janela-flutuante {
+        display: none; 
+        position: fixed;
+        z-index: 10000;
+        
+        /* Definição da cor de fundo para #FAFAFA */
+        background: #FAFAFA; 
+        border: 1px solid rgba(255, 159, 36, 0.4);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(255, 159, 36, 0.05);
+        border-radius: 16px;
+        overflow: hidden;
+        color: #333333; /* Texto escuro para alto contraste */
+        flex-direction: column;
+        
+        /* Configuração para telas acima de 992px (Desktop) */
+        width: 50%;
+        height: 75vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+      }
+
+      /* Cabeçalho da Janela */
+      .cabecalho-janela {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        background: rgba(255, 159, 36, 0.08);
+        border-bottom: 1px solid rgba(255, 159, 36, 0.2);
+      }
+
+      /* Miniatura da Agente inserida no topo da barra */
+      .mini-agente {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        margin-right: 12px;
+      }
+
+      /* Novo Título de Identificação da Janela */
+      .titulo-janela {
+        font-family: 'Raleway', sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 0.2px;
+        color: #1a1a1a;
+      }
+
+      /* Botão de Fechar posicionado à direita para manter a leitura limpa */
+      .botao-fechar {
+        background: none;
+        border: none;
+        color: #ff9f24;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0;
+        margin-left: auto; /* Empurra o botão para a extremidade direita */
+        transition: color 0.2s;
+      }
+
+      .botao-fechar:hover {
+        color: #d87d15;
+      }
+
+      /* Área Interna de Conteúdo (Mensagens) */
+      .conteudo-janela {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        font-size: 15px;
+        line-height: 1.5;
+        background: #FAFAFA;
+      }
+
+      /* Balão de Mensagem da IA adaptado ao tema claro */
+      .mensagem-sistema {
+        background: rgba(255, 159, 36, 0.08);
+        border-left: 3px solid #ff9f24;
+        padding: 12px 16px;
+        border-radius: 4px 12px 12px 12px;
+        max-width: 85%;
+        margin-bottom: 15px;
+        color: #222222;
+      }
+
+      /* Barra Demarcada Inferior (Rodapé) */
+      .rodape-janela {
+        display: flex;
+        align-items: center;
+        padding: 14px 16px;
+        background: #f2f2f2;
+        border-top: 1px solid rgba(255, 159, 36, 0.18);
+        gap: 10px;
+      }
+
+      /* Elemento Input de Texto */
+      .input-texto {
+        flex: 1;
+        background: #ffffff;
+        border: 1px solid rgba(255, 159, 36, 0.35);
+        padding: 12px 16px;
+        border-radius: 24px;
+        color: #333333;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      .input-texto:focus {
+        border-color: #ff9f24;
+        box-shadow: 0 0 10px rgba(255, 159, 36, 0.15);
+      }
+
+      /* Botões de Ação (Voz e Enviar) */
+      .botao-acao {
+        background: none;
+        border: none;
+        color: #ff9f24;
+        font-size: 20px;
+        cursor: pointer;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .botao-acao:hover {
+        background: rgba(255, 159, 36, 0.08);
+        color: #d87d15;
+      }
+
+      /* Comportamento Responsivo (Abaixo de 992px) */
+      @media (max-width: 992px) {
+        .janela-flutuante {
+          top: 10px;
+          bottom: 10px;
+          left: 10px;
+          right: 10px;
+          width: auto;
+          height: auto;
+          transform: none;
+          border-radius: 12px;
+        }
       }
     </style>
   </head>
 
   <body>
-    <a href="pages/agente.html" class="botao-agente">
-        <img src="images/Agente Nicole - Conversar.png" alt="Conversar com a Agente Nicole" style="position: fixed; bottom: 40px; right: 40px; width: 150px; z-index: 9999; cursor: pointer; transition: transform 0.3s;">
+    <a href="#" class="botao-agente" id="gatilhoAgente" onclick="abrirJanela(event)">
+        <img src="images/Agente Nicole _ Conversar.png" alt="Conversar com a Agente Nicole" class="imagem-agente">
     </a>
-</body>
+
+    <div id="janelaChat" class="janela-flutuante">
+      
+      <div class="cabecalho-janela">
+        <img src="images/Agente Nicole.png" alt="Agente Nicole" class="mini-agente">
+        <span class="titulo-janela">Nicole: a astronauta das Naves</span>
+        <button class="botao-fechar" onclick="fecharJanela()" title="Fechar janela">&times;</button>
+      </div>
+      
+      <div class="conteudo-janela">
+        <div class="mensagem-sistema">
+          Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?
+        </div>
+      </div>
+      
+      <div class="rodape-janela">
+        <input type="text" placeholder="Escreva sua mensagem aqui..." class="input-texto">
+        
+        <button class="botao-acao" title="Enviar mensagem por voz">
+          🎤
+        </button>
+        
+        <button class="botao-acao" title="Enviar texto">
+          ➔
+        </button>
+      </div>
+
+    </div>
+
+    <script>
+      function abrirJanela(event) {
+        event.preventDefault(); 
+        document.getElementById('janelaChat').style.display = 'flex';
+        document.getElementById('gatilhoAgente').style.display = 'none'; // A imagem principal some
+      }
+
+      function fecharJanela() {
+        document.getElementById('janelaChat').style.display = 'none';
+        document.getElementById('gatilhoAgente').style.display = 'block'; // A imagem principal reaparece
+      }
+    </script>
+  </body>
 </html>
