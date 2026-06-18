@@ -35,7 +35,7 @@ A interface de teste apresenta o ambiente web responsivo do portal da Nave do Co
 
 **Link do Agent IA (POC):** [https://projeto-nave.github.io/POC/](https://projeto-nave.github.io/POC/)
 
-**Link do site oficial das Naves:** [https://projeto-nave.github.io/POC/](https://www.navedoconhecimento.rio/)
+**Link do site oficial das Naves:** [https://www.navedoconhecimento.rio/](https://www.navedoconhecimento.rio/)
 
 ## Roadmap Futuro
 Este MVP contempla apenas o primeiro agente, o Agente Anfitrião, e serve como a fundação estrutural para a expansão da arquitetura tecnológica das Naves. O planejamento futuro engloba a integração de novos módulos baseados em agentes de IA:
