@@ -134,7 +134,7 @@
         line-height: 1;
         cursor: pointer;
         padding: 0;
-        margin-left: auto; /* Empurra o botão para a extremidade direita */
+        margin-left: auto;
         transition: color 0.2s;
       }
 
@@ -224,6 +224,16 @@
           transform: none;
           border-radius: 12px;
         }
+
+        /* Deixando o botão e a imagem menores no celular */
+        .botao-agente {
+          bottom: 20px;
+          right: 20px;
+        }
+        
+        .imagem-agente {
+          width: 90px; /* Reduz de 150px para 90px no celular */
+        }
       }
     </style>
   </head>
@@ -243,7 +253,7 @@
       
       <div class="conteudo-janela">
         <div class="mensagem-sistema">
-          Olá! Sou Nicole, uma agente de inteligência artificial. Vou atuar como a astronauta que vai te auxiliar a decolar nos recursos das Naves. Como posso te ajudar hoje?
+          Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?
         </div>
       </div>
       
