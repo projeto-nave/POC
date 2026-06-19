@@ -119,7 +119,7 @@
       }
 
       /* ========================================================
-         ESTILIZAÇÃO DOS MODAIS (JANELAS FLUTUANTES DO CABEÇALHO)
+         ESTILIZAÇÃO DOS MODAIS E SOMBREAMENTOS ESCUROS (OVERLAYS)
          ======================================================== */
       .fundo-modal {
         display: none; 
@@ -129,7 +129,7 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.7);
-        z-index: 10004; /* Ajustado para ficar acima de tudo (incluindo header e chat) */
+        z-index: 10004; /* Acima de tudo para focar a atenção do usuário */
         justify-content: center;
         align-items: center;
       }
@@ -211,7 +211,7 @@
       }
 
       /* ========================================================
-         CÓDIGO ORIGINAL DA AGENTE (AJUSTADO Z-INDEX)
+         CÓDIGO DA AGENTE NICOLE (MANTIDO COM LAYOUT CENTRADO)
          ======================================================== */
       @keyframes pulsar-neon {
         0% { filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4)); transform: scale(1); }
@@ -219,13 +219,26 @@
         100% { filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4)); transform: scale(1); }
       }
 
-      /* Ajustado z-index do botão para 10002 para ficar acima do header (10001) */
       .botao-agente { position: fixed; bottom: 40px; right: 40px; z-index: 10002; cursor: pointer; transition: all 0.3s ease; }
       .imagem-agente { width: 150px; display: block; animation: pulsar-neon 2.5s infinite ease-in-out; }
       .botao-agente:hover .imagem-agente { animation: none; filter: drop-shadow(0 0 15px #ff9f24) drop-shadow(0 0 30px #ff9f24); transform: scale(1.1); }
       
-      /* Ajustado z-index da janela de chat para 10003 para ficar acima do header (10001) */
-      .janela-flutuante { display: none; position: fixed; z-index: 10003; background: #FAFAFA; border: 1px solid rgba(255, 159, 36, 0.4); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(255, 159, 36, 0.05); border-radius: 16px; overflow: hidden; color: #333333; flex-direction: column; width: 50%; height: 75vh; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.3s ease; }
+      /* Removidos position fixed/transform do chat pois agora ele é centralizado pelo Flexbox do pai .fundo-modal */
+      .janela-flutuante { 
+        background: #FAFAFA; 
+        border: 1px solid rgba(255, 159, 36, 0.4); 
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(255, 159, 36, 0.05); 
+        border-radius: 16px; 
+        overflow: hidden; 
+        color: #333333; 
+        display: flex; 
+        flex-direction: column; 
+        width: 50%; 
+        height: 75vh; 
+        position: relative; 
+        transition: all 0.3s ease; 
+      }
+      
       .cabecalho-janela { display: flex; align-items: center; padding: 12px 20px; background: rgba(255, 159, 36, 0.08); border-bottom: 1px solid rgba(255, 159, 36, 0.2); }
       .mini-agente { width: 40px; height: 40px; object-fit: contain; margin-right: 12px; }
       .titulo-janela { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.2px; color: #1a1a1a; }
@@ -240,7 +253,7 @@
       .botao-acao:hover { background: rgba(255, 159, 36, 0.08); color: #d87d15; }
 
       @media (max-width: 992px) {
-        .janela-flutuante { top: 10px; bottom: 10px; left: 10px; right: 10px; width: auto; height: auto; transform: none; border-radius: 12px; }
+        .janela-flutuante { width: 90%; height: 80vh; border-radius: 12px; }
         .botao-agente { bottom: 20px; right: 20px; }
         .imagem-agente { width: 120px; }
       }
@@ -250,7 +263,7 @@
   <body>
     <header class="cabecalho-fixo">
       <div class="texto-alerta">
-        <strong>Atenção:</strong> Espaço para demonstração. Este cabeçalho não será implementado na versão final, pois este espaço já existe no site oficial das Naves do Conhecimento.
+        <strong>Atenção:</strong> Espaço para demonstration. Este cabeçalho não será implementado na versão final, pois este espaço já existe no site oficial das Naves do Conhecimento.
       </div>
       <div class="botoes-cabecalho">
         <button class="btn-cabecalho btn-usuario" onclick="abrirModal('modalUsuario')">Área do usuário</button>
@@ -259,11 +272,12 @@
     </header>
 
     <div class="fundo-pagina">
-
       <a href="#" class="botao-agente" id="gatilhoAgente" onclick="abrirJanela(event)">
           <img src="images/Agente Nicole _ Conversar.png" alt="Conversar com a Agente Nicole" class="imagem-agente">
       </a>
+    </div>
 
+    <div id="fundoChat" class="fundo-modal">
       <div id="janelaChat" class="janela-flutuante">
         <div class="cabecalho-janela">
           <img src="images/Agente Nicole.png" alt="Agente Nicole" class="mini-agente">
@@ -281,7 +295,6 @@
           <button class="botao-acao" title="Enviar texto">➔</button>
         </div>
       </div>
-
     </div>
 
     <div id="modalUsuario" class="fundo-modal">
@@ -309,7 +322,7 @@
     </div>
 
     <script>
-      // Scripts dos Modais
+      // Scripts dos Modais do Cabeçalho
       function abrirModal(idModal) {
         document.getElementById(idModal).style.display = 'flex';
       }
@@ -318,21 +331,27 @@
         document.getElementById(idModal).style.display = 'none';
       }
 
+      // Fechar ao clicar fora da janela (no fundo escuro de qualquer modal ou do chat)
       window.onclick = function(event) {
         if (event.target.classList.contains('fundo-modal')) {
           event.target.style.display = 'none';
+          
+          // Se o fundo clicado for o do chat, precisamos reexibir o botão da astronauta
+          if (event.target.id === 'fundoChat') {
+            document.getElementById('gatilhoAgente').style.display = 'block';
+          }
         }
       }
 
-      // Scripts da Agente Nicole
+      // Scripts da Agente Nicole (Controlando o overlay/fundo escuro)
       function abrirJanela(event) {
         event.preventDefault(); 
-        document.getElementById('janelaChat').style.display = 'flex';
+        document.getElementById('fundoChat').style.display = 'flex'; // Abre o sombreamento com o chat dentro
         document.getElementById('gatilhoAgente').style.display = 'none';
       }
 
       function fecharJanela() {
-        document.getElementById('janelaChat').style.display = 'none';
+        document.getElementById('fundoChat').style.display = 'none'; // Esconde o sombreamento e o chat
         document.getElementById('gatilhoAgente').style.display = 'block';
       }
     </script>
