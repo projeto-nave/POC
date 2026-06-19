@@ -9,278 +9,331 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
 
     <style>
+      /* Configuração do Body para trabalhar com Layout Flexbox */
       body {
         font-family: 'Atkinson Hyperlegible', sans-serif;
         margin: 0;
         padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* ========================================================
+         ESTILIZAÇÃO DO CABEÇALHO (HEADER) STICKY
+         ======================================================== */
+      .cabecalho-fixo {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(26, 26, 26, 0.95); /* Fundo escuro para destacar botões */
+        color: #FAFAFA;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        box-sizing: border-box;
+        z-index: 10001; /* Fica acima da página, mas abaixo das janelas flutuantes */
+        border-bottom: 2px solid #ff9f24;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .texto-alerta {
+        font-size: 14px;
+        max-width: 60%;
+        line-height: 1.4;
+      }
+
+      .botoes-cabecalho {
+        display: flex;
+        gap: 15px;
+      }
+
+      .btn-cabecalho {
+        font-family: 'Raleway', sans-serif;
+        font-weight: 700;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-usuario {
+        background-color: transparent;
+        color: #ff9f24;
+        border: 2px solid #ff9f24;
+      }
+
+      .btn-usuario:hover {
+        background-color: rgba(255, 159, 36, 0.1);
+      }
+
+      .btn-cadastro {
+        background-color: #ff9f24;
+        color: #1a1a1a;
+      }
+
+      .btn-cadastro:hover {
+        background-color: #d87d15;
+        box-shadow: 0 0 10px rgba(255, 159, 36, 0.5);
+      }
+
+      @media (max-width: 768px) {
+        .cabecalho-fixo {
+          flex-direction: column;
+          padding: 15px;
+          gap: 15px;
+          text-align: center;
+        }
+        .texto-alerta {
+          max-width: 100%;
+          font-size: 12px;
+        }
+        .botoes-cabecalho {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* ========================================================
+         CONTAINER PRINCIPAL COM AS IMAGENS DE FUNDO
+         ======================================================== */
+      .fundo-pagina {
+        flex: 1; /* Ocupa todo o espaço restante abaixo do header */
         background-image: url('images/indexNaveConhecimento.png'); 
         background-size: cover; 
         background-position: center; 
         background-repeat: no-repeat; 
-        background-attachment: fixed; 
-        height: 100vh;
+        position: relative;
       }
 
       /* Media Query para alterar a imagem de fundo no celular */
       @media (max-width: 992px) {
-        body {
+        .fundo-pagina {
           background-image: url('images/indexNaveConhecimento _ Celular.png');
           background-position: center top;
         }
       }
 
-      /* Animação de pulsar com o efeito neon */
-      @keyframes pulsar-neon {
-        0% {
-          filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) 
-                  drop-shadow(0 0 10px rgba(255, 159, 36, 0.4));
-          transform: scale(1);
-        }
-        50% {
-          filter: drop-shadow(0 0 10px #ff9f24) 
-                  drop-shadow(0 0 20px #ff9f24) 
-                  drop-shadow(0 0 30px #ff9f24);
-          transform: scale(1.05);
-        }
-        100% {
-          filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) 
-                  drop-shadow(0 0 10px rgba(255, 159, 36, 0.4));
-          transform: scale(1);
-        }
-      }
-
-      /* Botão Flutuante da Agente com ID para manipulação */
-      .botao-agente {
+      /* ========================================================
+         ESTILIZAÇÃO DOS MODAIS (JANELAS FLUTUANTES DO CABEÇALHO)
+         ======================================================== */
+      .fundo-modal {
+        display: none; 
         position: fixed;
-        bottom: 40px;
-        right: 40px;
-        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 10004; /* Ajustado para ficar acima de tudo (incluindo header e chat) */
+        justify-content: center;
+        align-items: center;
+      }
+
+      .conteudo-modal {
+        background-color: #FAFAFA;
+        padding: 30px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 159, 36, 0.4);
+      }
+
+      .fechar-modal {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #666;
         cursor: pointer;
-        transition: all 0.3s ease;
+        background: none;
+        border: none;
+        transition: color 0.3s;
       }
 
-      .imagem-agente {
-        width: 150px;
-        display: block;
-        animation: pulsar-neon 2.5s infinite ease-in-out;
+      .fechar-modal:hover {
+        color: #ff9f24;
       }
 
-      .botao-agente:hover .imagem-agente {
-        animation: none;
-        filter: drop-shadow(0 0 15px #ff9f24) 
-                drop-shadow(0 0 30px #ff9f24);
-        transform: scale(1.1);
+      .titulo-modal {
+        font-family: 'Raleway', sans-serif;
+        color: #1a1a1a;
+        margin-top: 0;
+        margin-bottom: 25px;
+        font-size: 22px;
+        text-align: center;
+      }
+
+      .formulario-modal {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .input-modal {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-family: 'Atkinson Hyperlegible', sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      .input-modal:focus {
+        border-color: #ff9f24;
+        box-shadow: 0 0 5px rgba(255, 159, 36, 0.3);
+      }
+
+      .btn-acao-modal {
+        margin-top: 10px;
+        padding: 12px;
+        background-color: #ff9f24;
+        color: #1a1a1a;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .btn-acao-modal:hover {
+        background-color: #d87d15;
       }
 
       /* ========================================================
-         ESTILIZAÇÃO DA JANELA FLUTUANTE (TEMA CLARO - #FAFAFA)
+         CÓDIGO ORIGINAL DA AGENTE (AJUSTADO Z-INDEX)
          ======================================================== */
+      @keyframes pulsar-neon {
+        0% { filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4)); transform: scale(1); }
+        50% { filter: drop-shadow(0 0 10px #ff9f24) drop-shadow(0 0 20px #ff9f24) drop-shadow(0 0 30px #ff9f24); transform: scale(1.05); }
+        100% { filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4)); transform: scale(1); }
+      }
+
+      /* Ajustado z-index do botão para 10002 para ficar acima do header (10001) */
+      .botao-agente { position: fixed; bottom: 40px; right: 40px; z-index: 10002; cursor: pointer; transition: all 0.3s ease; }
+      .imagem-agente { width: 150px; display: block; animation: pulsar-neon 2.5s infinite ease-in-out; }
+      .botao-agente:hover .imagem-agente { animation: none; filter: drop-shadow(0 0 15px #ff9f24) drop-shadow(0 0 30px #ff9f24); transform: scale(1.1); }
       
-      .janela-flutuante {
-        display: none; 
-        position: fixed;
-        z-index: 10000;
-        
-        /* Definição da cor de fundo para #FAFAFA */
-        background: #FAFAFA; 
-        border: 1px solid rgba(255, 159, 36, 0.4);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(255, 159, 36, 0.05);
-        border-radius: 16px;
-        overflow: hidden;
-        color: #333333; /* Texto escuro para alto contraste */
-        flex-direction: column;
-        
-        /* Configuração para telas acima de 992px (Desktop) */
-        width: 50%;
-        height: 75vh;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: all 0.3s ease;
-      }
+      /* Ajustado z-index da janela de chat para 10003 para ficar acima do header (10001) */
+      .janela-flutuante { display: none; position: fixed; z-index: 10003; background: #FAFAFA; border: 1px solid rgba(255, 159, 36, 0.4); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(255, 159, 36, 0.05); border-radius: 16px; overflow: hidden; color: #333333; flex-direction: column; width: 50%; height: 75vh; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.3s ease; }
+      .cabecalho-janela { display: flex; align-items: center; padding: 12px 20px; background: rgba(255, 159, 36, 0.08); border-bottom: 1px solid rgba(255, 159, 36, 0.2); }
+      .mini-agente { width: 40px; height: 40px; object-fit: contain; margin-right: 12px; }
+      .titulo-janela { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.2px; color: #1a1a1a; }
+      .botao-fechar { background: none; border: none; color: #ff9f24; font-size: 28px; line-height: 1; cursor: pointer; padding: 0; margin-left: auto; transition: color 0.2s; }
+      .botao-fechar:hover { color: #d87d15; }
+      .conteudo-janela { flex: 1; padding: 20px; overflow-y: auto; font-size: 15px; line-height: 1.5; background: #FAFAFA; }
+      .mensagem-sistema { background: rgba(255, 159, 36, 0.08); border-left: 3px solid #ff9f24; padding: 12px 16px; border-radius: 4px 12px 12px 12px; max-width: 85%; margin-bottom: 15px; color: #222222; }
+      .rodape-janela { display: flex; align-items: center; padding: 14px 16px; background: #f2f2f2; border-top: 1px solid rgba(255, 159, 36, 0.18); gap: 10px; }
+      .input-texto { flex: 1; background: #ffffff; border: 1px solid rgba(255, 159, 36, 0.35); padding: 12px 16px; border-radius: 24px; color: #333333; font-size: 14px; outline: none; transition: all 0.3s; }
+      .input-texto:focus { border-color: #ff9f24; box-shadow: 0 0 10px rgba(255, 159, 36, 0.15); }
+      .botao-acao { background: none; border: none; color: #ff9f24; font-size: 20px; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+      .botao-acao:hover { background: rgba(255, 159, 36, 0.08); color: #d87d15; }
 
-      /* Cabeçalho da Janela */
-      .cabecalho-janela {
-        display: flex;
-        align-items: center;
-        padding: 12px 20px;
-        background: rgba(255, 159, 36, 0.08);
-        border-bottom: 1px solid rgba(255, 159, 36, 0.2);
-      }
-
-      /* Miniatura da Agente inserida no topo da barra */
-      .mini-agente {
-        width: 40px;
-        height: 40px;
-        object-fit: contain;
-        margin-right: 12px;
-      }
-
-      /* Novo Título de Identificação da Janela */
-      .titulo-janela {
-        font-family: 'Raleway', sans-serif;
-        font-weight: 700;
-        font-size: 15px;
-        letter-spacing: 0.2px;
-        color: #1a1a1a;
-      }
-
-      /* Botão de Fechar posicionado à direita para manter a leitura limpa */
-      .botao-fechar {
-        background: none;
-        border: none;
-        color: #ff9f24;
-        font-size: 28px;
-        line-height: 1;
-        cursor: pointer;
-        padding: 0;
-        margin-left: auto;
-        transition: color 0.2s;
-      }
-
-      .botao-fechar:hover {
-        color: #d87d15;
-      }
-
-      /* Área Interna de Conteúdo (Mensagens) */
-      .conteudo-janela {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-        font-size: 15px;
-        line-height: 1.5;
-        background: #FAFAFA;
-      }
-
-      /* Balão de Mensagem da IA adaptado ao tema claro */
-      .mensagem-sistema {
-        background: rgba(255, 159, 36, 0.08);
-        border-left: 3px solid #ff9f24;
-        padding: 12px 16px;
-        border-radius: 4px 12px 12px 12px;
-        max-width: 85%;
-        margin-bottom: 15px;
-        color: #222222;
-      }
-
-      /* Barra Demarcada Inferior (Rodapé) */
-      .rodape-janela {
-        display: flex;
-        align-items: center;
-        padding: 14px 16px;
-        background: #f2f2f2;
-        border-top: 1px solid rgba(255, 159, 36, 0.18);
-        gap: 10px;
-      }
-
-      /* Elemento Input de Texto */
-      .input-texto {
-        flex: 1;
-        background: #ffffff;
-        border: 1px solid rgba(255, 159, 36, 0.35);
-        padding: 12px 16px;
-        border-radius: 24px;
-        color: #333333;
-        font-size: 14px;
-        outline: none;
-        transition: all 0.3s;
-      }
-
-      .input-texto:focus {
-        border-color: #ff9f24;
-        box-shadow: 0 0 10px rgba(255, 159, 36, 0.15);
-      }
-
-      /* Botões de Ação (Voz e Enviar) */
-      .botao-acao {
-        background: none;
-        border: none;
-        color: #ff9f24;
-        font-size: 20px;
-        cursor: pointer;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
-      }
-
-      .botao-acao:hover {
-        background: rgba(255, 159, 36, 0.08);
-        color: #d87d15;
-      }
-
-      /* Comportamento Responsivo (Abaixo de 992px) */
       @media (max-width: 992px) {
-        .janela-flutuante {
-          top: 10px;
-          bottom: 10px;
-          left: 10px;
-          right: 10px;
-          width: auto;
-          height: auto;
-          transform: none;
-          border-radius: 12px;
-        }
-
-        /* Deixando o botão e a imagem menores no celular */
-        .botao-agente {
-          bottom: 20px;
-          right: 20px;
-        }
-        
-        .imagem-agente {
-          width: 90px; /* Reduz de 150px para 90px no celular */
-        }
+        .janela-flutuante { top: 10px; bottom: 10px; left: 10px; right: 10px; width: auto; height: auto; transform: none; border-radius: 12px; }
+        .botao-agente { bottom: 20px; right: 20px; }
+        .imagem-agente { width: 120px; }
       }
     </style>
   </head>
 
   <body>
-    <a href="#" class="botao-agente" id="gatilhoAgente" onclick="abrirJanela(event)">
-        <img src="images/Agente Nicole _ Conversar.png" alt="Conversar com a Agente Nicole" class="imagem-agente">
-    </a>
+    <header class="cabecalho-fixo">
+      <div class="texto-alerta">
+        <strong>Atenção:</strong> Espaço para demonstração. Este cabeçalho não será implementado na versão final, pois este espaço já existe no site oficial das Naves do Conhecimento.
+      </div>
+      <div class="botoes-cabecalho">
+        <button class="btn-cabecalho btn-usuario" onclick="abrirModal('modalUsuario')">Área do usuário</button>
+        <button class="btn-cabecalho btn-cadastro" onclick="abrirModal('modalCadastro')">Cadastre-se</button>
+      </div>
+    </header>
 
-    <div id="janelaChat" class="janela-flutuante">
-      
-      <div class="cabecalho-janela">
-        <img src="images/Agente Nicole.png" alt="Agente Nicole" class="mini-agente">
-        <span class="titulo-janela">Nicole: a astronauta das Naves</span>
-        <button class="botao-fechar" onclick="fecharJanela()" title="Fechar janela">&times;</button>
-      </div>
-      
-      <div class="conteudo-janela">
-        <div class="mensagem-sistema">
-          Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?
+    <div class="fundo-pagina">
+
+      <a href="#" class="botao-agente" id="gatilhoAgente" onclick="abrirJanela(event)">
+          <img src="images/Agente Nicole _ Conversar.png" alt="Conversar com a Agente Nicole" class="imagem-agente">
+      </a>
+
+      <div id="janelaChat" class="janela-flutuante">
+        <div class="cabecalho-janela">
+          <img src="images/Agente Nicole.png" alt="Agente Nicole" class="mini-agente">
+          <span class="titulo-janela">Nicole: a astronauta das Naves</span>
+          <button class="botao-fechar" onclick="fecharJanela()" title="Fechar janela">&times;</button>
         </div>
-      </div>
-      
-      <div class="rodape-janela">
-        <input type="text" placeholder="Escreva sua mensagem aqui..." class="input-texto">
-        
-        <button class="botao-acao" title="Enviar mensagem por voz">
-          🎤
-        </button>
-        
-        <button class="botao-acao" title="Enviar texto">
-          ➔
-        </button>
+        <div class="conteudo-janela">
+          <div class="mensagem-sistema">
+            Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?
+          </div>
+        </div>
+        <div class="rodape-janela">
+          <input type="text" placeholder="Escreva sua mensagem aqui..." class="input-texto">
+          <button class="botao-acao" title="Enviar mensagem por voz">🎤</button>
+          <button class="botao-acao" title="Enviar texto">➔</button>
+        </div>
       </div>
 
     </div>
 
+    <div id="modalUsuario" class="fundo-modal">
+      <div class="conteudo-modal">
+        <button class="fechar-modal" onclick="fecharModal('modalUsuario')" title="Fechar janela">&times;</button>
+        <h2 class="titulo-modal">Área do Usuário</h2>
+        <form class="formulario-modal" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="E-mail" class="input-modal" required>
+          <input type="password" placeholder="Senha" class="input-modal" required>
+          <button type="submit" class="btn-acao-modal">Entrar</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modalCadastro" class="fundo-modal">
+      <div class="conteudo-modal">
+        <button class="fechar-modal" onclick="fecharModal('modalCadastro')" title="Fechar janela">&times;</button>
+        <h2 class="titulo-modal">Criar Conta</h2>
+        <form class="formulario-modal" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="E-mail" class="input-modal" required>
+          <input type="password" placeholder="Senha" class="input-modal" required>
+          <button type="submit" class="btn-acao-modal">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+
     <script>
+      // Scripts dos Modais
+      function abrirModal(idModal) {
+        document.getElementById(idModal).style.display = 'flex';
+      }
+
+      function fecharModal(idModal) {
+        document.getElementById(idModal).style.display = 'none';
+      }
+
+      window.onclick = function(event) {
+        if (event.target.classList.contains('fundo-modal')) {
+          event.target.style.display = 'none';
+        }
+      }
+
+      // Scripts da Agente Nicole
       function abrirJanela(event) {
         event.preventDefault(); 
         document.getElementById('janelaChat').style.display = 'flex';
-        document.getElementById('gatilhoAgente').style.display = 'none'; // A imagem principal some
+        document.getElementById('gatilhoAgente').style.display = 'none';
       }
 
       function fecharJanela() {
         document.getElementById('janelaChat').style.display = 'none';
-        document.getElementById('gatilhoAgente').style.display = 'block'; // A imagem principal reaparece
+        document.getElementById('gatilhoAgente').style.display = 'block';
       }
     </script>
   </body>
