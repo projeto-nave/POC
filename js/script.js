@@ -7,10 +7,16 @@
 // completa do backend — caminhos relativos ("/auth/login-form")
 // vão sempre bater no próprio Live Server, que não tem essas rotas.
 const API_BASE_URL = 'https://api-backend-f9exb6cbghh5d3e3.westus2-01.azurewebsites.net';
-
+/* const API_BASE_URL = 'http://127.0.0.1:8000'; */
 // =============================================
 // UTILITÁRIOS
 // =============================================
+
+function capitalize(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 
 function getAuthHeaders(isJson = true) {
     const token = localStorage.getItem('access_token');
@@ -178,11 +184,17 @@ formLogin.addEventListener('submit', async (e) => {
 function atualizarUI(email) {
     if (email) {
         const nome = email.split('@')[0];
-        openLoginBtn.textContent      = `👤 ${nome}`;
+        const nomeFormatado = capitalize(nome)
+        openLoginBtn.textContent      = `👤 ${nomeFormatado}`;
         logoutBtn.style.display       = 'inline-block';
         // ✅ CORRIGIDO: esconde "Cadastre-se" enquanto o usuário está logado —
         // antes ele continuava visível mesmo após o login.
         openCadastroHeader.style.display = 'none';
+
+        chatMessages.innerHTML = `
+            <div class="mensagem-sistema">
+                Oi ${ nomeFormatado}! Para caso ainda não me conheça, eu sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?
+            </div>`;
     } else {
         openLoginBtn.textContent      = 'Área do usuário';
         logoutBtn.style.display       = 'none';
@@ -196,8 +208,7 @@ function fazerLogout() {
     atualizarUI(null);
     chatMessages.innerHTML = `
         <div class="mensagem-sistema">
-            Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta
-            que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?
+            Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?
         </div>`;
 }
 
@@ -368,11 +379,19 @@ async function carregarHistorico() {
             });
             chatMessages.scrollTop = chatMessages.scrollHeight;
         } else {
-            adicionarMensagemNaView(
-                'Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta ' +
-                'que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?',
-                'sistema'
-            );
+            // Verifica se há usuário logado
+            const email = localStorage.getItem('user_email');
+            if (email) {
+                const nome = email.split('@')[0];
+                const nomeFormatado = capitalize(nome);
+                adicionarMensagemNaView(
+                    `Oi ${nomeFormatado}! Para caso ainda não me conheça, eu sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?`
+                );
+            } else {
+                adicionarMensagemNaView(
+                    'Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje?'
+                );
+            }
         }
     } catch (error) {
         console.error('Erro ao carregar histórico:', error);
