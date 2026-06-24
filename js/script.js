@@ -7,7 +7,7 @@
 // completa do backend — caminhos relativos ("/auth/login-form")
 // vão sempre bater no próprio Live Server, que não tem essas rotas.
 const API_BASE_URL = 'https://api-backend-f9exb6cbghh5d3e3.westus2-01.azurewebsites.net';
-/* const API_BASE_URL = 'http://127.0.0.1:8000'; */
+//const API_BASE_URL = 'http://127.0.0.1:8000'; 
 // =============================================
 // UTILITÁRIOS
 // =============================================
@@ -37,10 +37,17 @@ function adicionarMensagemNaView(conteudo, tipo = 'sistema') {
         erro:    'mensagem-erro',
     };
     div.className = classeMap[tipo] || 'mensagem-sistema';
-    div.textContent = conteudo;
+
+    if (tipo === 'sistema') {
+        div.innerHTML = conteudo; // permite links e formatação
+    } else {
+        div.textContent = conteudo; // mantém segurança para mensagens do usuário
+    }
+
     chatMessages.appendChild(div);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
 
 function exibirMensagemForm(formEl, id, mensagem, cor) {
     let div = document.getElementById(id);
