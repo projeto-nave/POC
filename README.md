@@ -13,7 +13,7 @@ Este repositório contém a demonstração dos itens executados no MVP da **Agen
 | **Felipe Gijsen Downs** | Desenvolvedor back-end. | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | xxx |
 | **João Pedro Francisco da Rocha** | Desenvolvedor front-end, back-end e designer. | Aluno do curso de Ciência da Computação da Unicarioca. | xxx |
 | **Milena Jesus** | Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo, pesquisa de conformidade com a LGPD e o ECA, e garantia da qualidade e segurança das respostas da inteligência artificial (Nicole). | Aluna do curso de Marketing da Unicarioca. | xxx |
-| **Lucas Gaspar** | Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo e garantia da qualidade das respostas da inteligência artificial (Nicole). | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | xxx |
+| **Lucas Gaspar** | Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo e garantia da qualidade das respostas da inteligência artificial (Nicole). | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | [LinkedIn](https://www.linkedin.com/in/lucasgasparpaiva/) |
 
 ## O Problema
 Atualmente, há um baixo aproveitamento dos recursos das Naves devido a dificuldades de divulgação e graves barreiras de letramento tecnológico, o que acaba afastando o cidadão dos serviços digitais disponíveis.
