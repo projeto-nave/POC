@@ -95,10 +95,12 @@ body {
     gap: 15px;
     text-align: center;
   }
+
   .texto-alerta {
     max-width: 100%;
     font-size: 12px;
   }
+
   .botoes-cabecalho {
     width: 100%;
     justify-content: center;
@@ -119,7 +121,7 @@ body {
 
 @media (max-width: 992px) {
   .fundo-pagina {
-    background-image: url('../images/indexNaveConhecimento _ Celular.png');
+    background-image: url('../images/indexNaveConhecimento\ _\ Celular.png');
     background-position: center top;
   }
 }
@@ -271,14 +273,42 @@ body {
    CÓDIGO DA AGENTE NICOLE
    ======================================================== */
 @keyframes pulsar-neon {
-  0% { filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4)); transform: scale(1); }
-  50% { filter: drop-shadow(0 0 10px #ff9f24) drop-shadow(0 0 20px #ff9f24) drop-shadow(0 0 30px #ff9f24); transform: scale(1.05); }
-  100% { filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4)); transform: scale(1); }
+  0% {
+    filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4));
+    transform: scale(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 10px #ff9f24) drop-shadow(0 0 20px #ff9f24) drop-shadow(0 0 30px #ff9f24);
+    transform: scale(1.05);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 5px rgba(255, 159, 36, 0.4)) drop-shadow(0 0 10px rgba(255, 159, 36, 0.4));
+    transform: scale(1);
+  }
 }
 
-.botao-agente { position: fixed; bottom: 40px; right: 40px; z-index: 10002; cursor: pointer; transition: all 0.3s ease; }
-.imagem-agente { width: 150px; display: block; animation: pulsar-neon 2.5s infinite ease-in-out; }
-.botao-agente:hover .imagem-agente { animation: none; filter: drop-shadow(0 0 15px #ff9f24) drop-shadow(0 0 30px #ff9f24); transform: scale(1.1); }
+.botao-agente {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 10002;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.imagem-agente {
+  width: 150px;
+  display: block;
+  animation: pulsar-neon 2.5s infinite ease-in-out;
+}
+
+.botao-agente:hover .imagem-agente {
+  animation: none;
+  filter: drop-shadow(0 0 15px #ff9f24) drop-shadow(0 0 30px #ff9f24);
+  transform: scale(1.1);
+}
 
 .janela-flutuante {
   background: #FAFAFA;
@@ -295,44 +325,209 @@ body {
   transition: all 0.3s ease;
 }
 
-.cabecalho-janela { display: flex; align-items: center; padding: 12px 20px; background: rgba(255, 159, 36, 0.08); border-bottom: 1px solid rgba(255, 159, 36, 0.2); }
-.mini-agente { width: 40px; height: 40px; object-fit: contain; margin-right: 12px; }
-.titulo-janela { font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.2px; color: #1a1a1a; }
-.botao-fechar { background: none; border: none; color: #ff9f24; font-size: 28px; line-height: 1; cursor: pointer; padding: 0; margin-left: auto; transition: color 0.2s; }
-.botao-fechar:hover { color: #d87d15; }
-.conteudo-janela { flex: 1; padding: 20px; overflow-y: auto; font-size: 15px; line-height: 1.5; background: #FAFAFA; }
-.mensagem-sistema { background: rgba(255, 159, 36, 0.08); border-left: 3px solid #ff9f24; padding: 12px 16px; border-radius: 4px 12px 12px 12px; max-width: 85%; margin-bottom: 15px; color: #222222; }
-.mensagem-usuario { background: rgba(0, 123, 255, 0.08); border-left: 3px solid #007bff; padding: 12px 16px; border-radius: 12px 4px 12px 12px; max-width: 85%; margin-bottom: 15px; margin-left: auto; color: #222222; }
-.mensagem-erro { background: rgba(220, 53, 69, 0.08); border-left: 3px solid #dc3545; padding: 12px 16px; border-radius: 4px 12px 12px 12px; max-width: 85%; margin-bottom: 15px; color: #842029; }
-.rodape-janela { display: flex; align-items: center; padding: 14px 16px; background: #f2f2f2; border-top: 1px solid rgba(255, 159, 36, 0.18); gap: 10px; }
-.input-texto { flex: 1; background: #ffffff; border: 1px solid rgba(255, 159, 36, 0.35); padding: 12px 16px; border-radius: 24px; color: #333333; font-size: 14px; outline: none; transition: all 0.3s; }
-.input-texto:focus { border-color: #ff9f24; box-shadow: 0 0 10px rgba(255, 159, 36, 0.15); }
-.botao-acao { background: none; border: none; color: #ff9f24; font-size: 20px; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
-.botao-acao:hover { background: rgba(255, 159, 36, 0.08); color: #d87d15; }
-
-@media (max-width: 992px) {
-  .janela-flutuante { width: 90%; height: 80vh; border-radius: 12px; }
-  .botao-agente { bottom: 20px; right: 20px; }
-  .imagem-agente { width: 120px; }
+.cabecalho-janela {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(255, 159, 36, 0.08);
+  /* Removemos o border-bottom se quiser um visual mais limpo, ou mantenha se preferir */
+  border-bottom: none;
+  /* Sombra bem demarcada e forte */
+  box-shadow: 0 6px 8px -3px rgba(0, 0, 0, 0.35);
+  /* Essencial para a sombra aparecer por cima do conteúdo */
+  position: relative;
+  z-index: 10;
 }
 
+.mini-agente {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-right: 12px;
+}
 
+.titulo-janela {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  color: #1a1a1a;
+}
 
-.listen-btn, .stop-btn {
-    margin-left: 8px;
-    font-size: 0.8em;
-    padding: 2px 6px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.botao-fechar {
+  background: none;
+  border: none;
+  color: #ff9f24;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+
+.botao-fechar:hover {
+  color: #d87d15;
+}
+
+.conteudo-janela {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  font-size: 15px;
+  line-height: 1.5;
+  background: #FAFAFA;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Alterado: Flex para permitir divisão de texto e ações */
+.mensagem-sistema {
+  background: rgba(255, 159, 36, 0.08);
+  border-left: 3px solid #ff9f24;
+  padding: 12px 16px;
+  border-radius: 4px 12px 12px 12px;
+  max-width: 85%;
+  margin-bottom: 15px;
+  color: #222222;
+  display: flex;
+  flex-direction: column;
+}
+
+.mensagem-usuario {
+  background: rgba(0, 123, 255, 0.08);
+  border-left: 3px solid #007bff;
+  padding: 12px 16px;
+  border-radius: 12px 4px 12px 12px;
+  max-width: 85%;
+  margin-bottom: 15px;
+  margin-left: auto;
+  color: #222222;
+}
+
+.mensagem-erro {
+  background: rgba(220, 53, 69, 0.08);
+  border-left: 3px solid #dc3545;
+  padding: 12px 16px;
+  border-radius: 4px 12px 12px 12px;
+  max-width: 85%;
+  margin-bottom: 15px;
+  color: #842029;
+}
+
+.rodape-janela {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: #f2f2f2;
+  border-top: 1px solid rgba(255, 159, 36, 0.18);
+  gap: 10px;
+}
+
+/* Alterado: Adicionado min-width e flex ajustado para não quebrar com botão responsivo */
+.input-texto {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid rgba(255, 159, 36, 0.35);
+  padding: 12px 16px;
+  border-radius: 24px;
+  color: #333333;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.input-texto:focus {
+  border-color: #ff9f24;
+  box-shadow: 0 0 10px rgba(255, 159, 36, 0.15);
+}
+
+/* Alterado: Botão agora é uma pílula (pill) e adapta o tamanho */
+.botao-acao {
+  background: none;
+  border: none;
+  color: #004B87;
+  font-size: 20px;
+  cursor: pointer;
+  width: auto;
+  min-width: 42px;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.botao-acao:hover {
+  background: rgba(0, 75, 135, 0.08);
+  color: #00335c;
+}
+
+/* Novo: Estado gravando com cor vermelha e fonte ajustada */
+.botao-acao.gravando {
+  background-color: #dc3545;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.botao-acao.gravando:hover {
+  background-color: #b02a37;
+  color: #ffffff;
+}
+
+@media (max-width: 992px) {
+  .janela-flutuante {
+    width: 90%;
+    height: 80vh;
+    border-radius: 12px;
+  }
+
+  .botao-agente {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .imagem-agente {
+    width: 120px;
+  }
+}
+
+/* Nova estrutura de ações dentro da mensagem do sistema */
+.mensagem-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 159, 36, 0.2);
+}
+
+/* Alterado: Botões formatados para inline-flex e margin-left removido devido ao gap */
+.listen-btn,
+.stop-btn {
+  margin-left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8em;
+  border: none;
+  cursor: pointer;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 20px;
 }
 
 .listen-btn {
-    background-color: #007bff;
-    color: white;
+  background-color: #004B87;
+  color: white;
 }
 
 .stop-btn {
-    background-color: #dc3545;
-    color: white;
+  background-color: #97222e;
+  color: white;
 }

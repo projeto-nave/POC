@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   </head>
 
   <body>
@@ -28,31 +29,28 @@
       </a>
     </div>
 
-    <!-- Chat da Agente Nicole -->
     <div id="fundoChat" class="fundo-modal">
       <div id="janelaChat" class="janela-flutuante">
         <div class="cabecalho-janela">
           <img src="images/Agente Nicole.png" alt="Agente Nicole" class="mini-agente">
           <span class="titulo-janela">Nicole: a astronauta das Naves</span>
-          <button class="botao-fechar" id="fecharChatBtn" title="Fechar janela">&times;</button>
+          <button class="botao-fechar" id="fecharChatBtn" title="Fechar janela"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="conteudo-janela" id="chatMessages">
           <div class="mensagem-sistema">
-            <!-- Olá! Sou Nicole, uma agente de inteligência artificial, que atuarei como a astronauta que posso te auxiliar a decolar nos recursos das Naves. O que posso te ajudar hoje? -->
-          </div>
+            </div>
         </div>
         <div class="rodape-janela">
           <input type="text" id="chatInput" placeholder="Escreva sua mensagem aqui..." class="input-texto">
-          <button class="botao-acao" id="voice" title="Enviar mensagem por voz">🎤</button>
-          <button class="botao-acao" id="sendChat" title="Enviar texto">➔</button>
+          <button class="botao-acao" id="voice" title="Enviar mensagem por voz"><i class="fa-solid fa-microphone"></i></button>
+          <button class="botao-acao" id="sendChat" title="Enviar texto"><i class="fa-solid fa-paper-plane"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- Modal de Login (Área do Usuário) -->
     <div id="loginModal" class="fundo-modal">
       <div class="conteudo-modal">
-        <button class="fechar-modal" id="closeLogin" title="Fechar janela">&times;</button>
+        <button class="fechar-modal" id="closeLogin" title="Fechar janela"><i class="fa-solid fa-xmark"></i></button>
         <h2 class="titulo-modal">Área do Usuário</h2>
         <form id="formLogin" class="formulario-modal">
           <div class="grupo-input">
@@ -64,18 +62,16 @@
             <input type="password" id="password" class="input-modal" placeholder="Sua senha" required autocomplete="current-password">
           </div>
           <button type="submit" class="btn-acao-modal">Entrar</button>
-          <!-- #loginError é injetado aqui pelo JS quando há falha -->
-        </form>
+          </form>
         <p class="link-troca-modal">
           Não tem conta? <a id="openCadastro">Cadastre-se</a>
         </p>
       </div>
     </div>
 
-    <!-- Modal de Cadastro -->
     <div id="cadastroModal" class="fundo-modal">
       <div class="conteudo-modal">
-        <button class="fechar-modal" id="closeCadastro" title="Fechar janela">&times;</button>
+        <button class="fechar-modal" id="closeCadastro" title="Fechar janela"><i class="fa-solid fa-xmark"></i></button>
         <h2 class="titulo-modal">Criar Conta</h2>
         <form id="formCadastro" class="formulario-modal">
           <div class="grupo-input">
@@ -95,8 +91,7 @@
             <input type="date" id="cadNascimento" class="input-modal" required>
           </div>
           <button type="submit" class="btn-acao-modal">Cadastrar</button>
-          <!-- #cadastroError é injetado aqui pelo JS -->
-        </form>
+          </form>
         <p class="link-troca-modal">
           Já tem conta? <a id="voltarLogin">Entrar</a>
         </p>

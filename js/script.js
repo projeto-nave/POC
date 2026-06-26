@@ -40,21 +40,27 @@ function adicionarMensagemNaView(conteudo, tipo = 'sistema') {
     };
     div.className = classeMap[tipo] || 'mensagem-sistema';
 
-    if (tipo === 'sistema') {
-        div.innerHTML = conteudo;
+    // Cria a div separada para o texto da conversa
+    const textoDiv = document.createElement('div');
+    textoDiv.className = 'mensagem-conteudo';
+    textoDiv.innerHTML = conteudo;
+    div.appendChild(textoDiv);
 
-        // botão escutar
+    if (tipo === 'sistema') {
+        // Cria a div de rodapé para os botões de áudio
+        const acoesDiv = document.createElement('div');
+        acoesDiv.className = 'mensagem-acoes';
+
         const listenBtn = document.createElement('button');
-        listenBtn.textContent = "🎧 Escutar";
+        listenBtn.innerHTML = '<i class="fa-solid fa-headphones"></i> Escutar';
         listenBtn.className = "listen-btn";
         listenBtn.addEventListener('click', () => {
             const textoLimpo = limparTextoParaAudio(conteudo);
             speakText(textoLimpo, div, listenBtn); // passa o div e o próprio botão
         });
 
-        div.appendChild(listenBtn);
-    } else {
-        div.textContent = conteudo;
+        acoesDiv.appendChild(listenBtn);
+        div.appendChild(acoesDiv);
     }
 
     chatMessages.appendChild(div);
@@ -74,12 +80,12 @@ function exibirMensagemForm(formEl, id, mensagem, cor) {
         formEl.appendChild(div);
     }
     div.style.color = cor;
-    div.textContent = mensagem;
+    div.innerHTML = mensagem; // Mudado para innerHTML para suportar o FontAwesome
 }
 
 function limparMensagemForm(id) {
     const div = document.getElementById(id);
-    if (div) div.textContent = '';
+    if (div) div.innerHTML = '';
 }
 
 // =============================================
@@ -163,7 +169,7 @@ formLogin.addEventListener('submit', async (e) => {
     const submitBtn = formLogin.querySelector('button[type="submit"]');
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Entrando...';
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Entrando...';
 
     try {
         const response = await fetch(`${API_BASE_URL}/auth/login-form`, {
@@ -197,7 +203,7 @@ formLogin.addEventListener('submit', async (e) => {
         }
 
     } catch (error) {
-        exibirMensagemForm(formLogin, 'loginError', '⚠ ' + error.message, '#dc3545');
+        exibirMensagemForm(formLogin, 'loginError', '<i class="fa-solid fa-triangle-exclamation"></i> ' + error.message, '#dc3545');
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Entrar';
@@ -208,7 +214,7 @@ function atualizarUI(email) {
     if (email) {
         const nome = email.split('@')[0];
         const nomeFormatado = capitalize(nome)
-        openLoginBtn.textContent = `👤 ${nomeFormatado}`;
+        openLoginBtn.innerHTML = `<i class="fa-solid fa-user"></i> ${nomeFormatado}`;
         logoutBtn.style.display = 'inline-block';
         // ✅ CORRIGIDO: esconde "Cadastre-se" enquanto o usuário está logado —
         // antes ele continuava visível mesmo após o login.
@@ -216,7 +222,9 @@ function atualizarUI(email) {
 
         chatMessages.innerHTML = `
             <div class="mensagem-sistema">
-                Olá, ${nomeFormatado}! Sou Nicole, sua assistente virtual de inteligência artificial e sua astronauta guia nesta jornada pelas Naves do Conhecimento. Estou aqui para ajudar você a decolar nos recursos da Nave.Como posso ajudar você hoje?
+                <div class="mensagem-conteudo">
+                    Olá, ${nomeFormatado}! Sou Nicole, sua assistente virtual de inteligência artificial. Estou aqui para ajudar você a decolar nos recursos das Naves. Como posso ajudar você hoje?
+                </div>
             </div>`;
     } else {
         openLoginBtn.textContent = 'Área do usuário';
@@ -231,7 +239,9 @@ function fazerLogout() {
     atualizarUI(null);
     chatMessages.innerHTML = `
         <div class="mensagem-sistema">
-            Olá! Sou Nicole, sua assistente virtual de inteligência artificial. Estou aqui para ajudar você a encontrar informações, conhecer os recursos das Naves do Conhecimento e esclarecer dúvidas sobre os serviços disponíveis. Como posso ajudar você hoje?
+            <div class="mensagem-conteudo">
+                Olá! Sou Nicole, sua assistente virtual de inteligência artificial. Estou aqui para ajudar você a encontrar informações sobre os recursos das Naves e esclarecer dúvidas sobre os serviços disponíveis. Como posso ajudar você hoje?
+            </div>
         </div>`;
 }
 
@@ -296,7 +306,7 @@ formCadastro.addEventListener('submit', async (e) => {
     const submitBtn = formCadastro.querySelector('button[type="submit"]');
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Criando conta...';
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Criando conta...';
 
     try {
         const response = await fetch(`${API_BASE_URL}/auth/criar_usuario`, {
@@ -334,7 +344,7 @@ formCadastro.addEventListener('submit', async (e) => {
 
         // ✅ Conta criada — avisa e já leva pro login preenchido
         formCadastro.reset();
-        exibirMensagemForm(formCadastro, 'cadastroError', '✅ Conta criada! Faça login.', '#28a745');
+        exibirMensagemForm(formCadastro, 'cadastroError', '<i class="fa-solid fa-check"></i> Conta criada! Faça login.', '#28a745');
 
         setTimeout(() => {
             limparMensagemForm('cadastroError');
@@ -345,7 +355,7 @@ formCadastro.addEventListener('submit', async (e) => {
         }, 1200);
 
     } catch (error) {
-        exibirMensagemForm(formCadastro, 'cadastroError', '⚠ ' + error.message, '#dc3545');
+        exibirMensagemForm(formCadastro, 'cadastroError', '<i class="fa-solid fa-triangle-exclamation"></i> ' + error.message, '#dc3545');
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Cadastrar';
@@ -408,17 +418,17 @@ async function carregarHistorico() {
                 const nome = email.split('@')[0];
                 const nomeFormatado = capitalize(nome);
                 adicionarMensagemNaView(
-                    `Olá, ${nomeFormatado}! Sou Nicole, sua assistente virtual de inteligência artificial e sua astronauta guia nesta jornada pelas Naves do Conhecimento. Estou aqui para ajudar você a decolar nos recursos da Nave.Como posso ajudar você hoje?`
+                    `Olá, ${nomeFormatado}! Sou Nicole, sua assistente virtual de inteligência artificial. Estou aqui para ajudar você a decolar nos recursos das Naves. Como posso ajudar você hoje?`
                 );
             } else {
                 adicionarMensagemNaView(
-                    'Olá! Sou Nicole, sua assistente virtual de inteligência artificial. Estou aqui para ajudar você a encontrar informações, conhecer os recursos das Naves do Conhecimento e esclarecer dúvidas sobre os serviços disponíveis. Como posso ajudar você hoje?'
+                    'Olá! Sou Nicole, sua assistente virtual de inteligência artificial. Estou aqui para ajudar você a encontrar informações sobre os recursos das Naves e esclarecer dúvidas sobre os serviços disponíveis. Como posso ajudar você hoje?'
                 );
             }
         }
     } catch (error) {
         console.error('Erro ao carregar histórico:', error);
-        adicionarMensagemNaView('❌ Não foi possível carregar o histórico.', 'erro');
+        adicionarMensagemNaView('<i class="fa-solid fa-xmark"></i> Não foi possível carregar o histórico.', 'erro');
     }
 }
 
@@ -505,13 +515,15 @@ if (window.SpeechSDK) {
         };
 
         recognizer.sessionStopped = () => {
-            micBtn.textContent = "🎤";
+            micBtn.classList.remove('gravando');
+            micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
             recognizer.close();
             recognizer = undefined;
         };
 
         recognizer.canceled = () => {
-            micBtn.textContent = "🎤";
+            micBtn.classList.remove('gravando');
+            micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
             recognizer.close();
             recognizer = undefined;
         };
@@ -520,11 +532,13 @@ if (window.SpeechSDK) {
     micBtn.addEventListener('click', async () => {
         if (!recognizer) {
             await initRecognizer();
-            micBtn.textContent = "🎙️ Gravando...";
+            micBtn.classList.add('gravando');
+            micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i> Gravando...';
             recognizer.startContinuousRecognitionAsync();
         } else {
             recognizer.stopContinuousRecognitionAsync(() => {
-                micBtn.textContent = "🎤";
+                micBtn.classList.remove('gravando');
+                micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
                 recognizer.close();
                 recognizer = undefined;
             });
@@ -575,7 +589,7 @@ function pararAudioAtual() {
 
     if (audioState.listenBtn) {
         audioState.listenBtn.disabled = false;
-        audioState.listenBtn.textContent = "🎧 Escutar";
+        audioState.listenBtn.innerHTML = '<i class="fa-solid fa-headphones"></i> Escutar';
         audioState.listenBtn = null;
     }
 }
@@ -624,7 +638,7 @@ async function speakText(text, parentDiv, listenBtn) {
     // Atualiza o botão desta mensagem para "carregando"
     if (listenBtn) {
         listenBtn.disabled = true;
-        listenBtn.textContent = "⏳ Carregando...";
+        listenBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Carregando...';
         audioState.listenBtn = listenBtn;
     }
 
@@ -639,7 +653,7 @@ async function speakText(text, parentDiv, listenBtn) {
         console.error("Erro ao sintetizar áudio:", err);
         if (listenBtn) {
             listenBtn.disabled = false;
-            listenBtn.textContent = "🎧 Escutar";
+            listenBtn.innerHTML = '<i class="fa-solid fa-headphones"></i> Escutar';
             audioState.listenBtn = null;
         }
         audioState.busy = false;
@@ -658,18 +672,25 @@ async function speakText(text, parentDiv, listenBtn) {
 
     // Atualiza botão Escutar para "Reproduzindo"
     if (listenBtn) {
-        listenBtn.textContent = "🔊 Reproduzindo...";
+        listenBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Reproduzindo...';
     }
 
     // Botão ⏹️ Parar — fica visível enquanto o áudio toca
     const stopBtn = document.createElement('button');
-    stopBtn.textContent = "⏹️ Parar";
+    stopBtn.innerHTML = '<i class="fa-solid fa-stop"></i> Parar';
     stopBtn.className = "stop-btn";
     stopBtn.addEventListener('click', () => {
         pararAudioAtual();
         console.log("Áudio interrompido pelo usuário.");
     });
-    parentDiv.appendChild(stopBtn);
+    
+    // Adiciona o botão Parar dentro da div separada (.mensagem-acoes)
+    const acoesDiv = parentDiv.querySelector('.mensagem-acoes');
+    if (acoesDiv) {
+        acoesDiv.appendChild(stopBtn);
+    } else {
+        parentDiv.appendChild(stopBtn); // Fallback caso não encontre
+    }
     audioState.stopBtn = stopBtn;
 
     // Callback quando o áudio termina naturalmente
