@@ -77,7 +77,6 @@ body {
   box-shadow: 0 0 10px rgba(255, 159, 36, 0.5);
 }
 
-/* Botão de logout — reaproveita o estilo do btn-usuario, oculto por padrão */
 .btn-logout {
   background-color: transparent;
   color: #ff6b6b;
@@ -142,8 +141,6 @@ body {
   align-items: center;
 }
 
-/* Classe usada pelo JS (addEventListener / classList) para abrir modais.
-   Equivalente a display:flex, mas controlado via CSS em vez de inline JS. */
 .fundo-modal.active {
   display: flex;
 }
@@ -262,7 +259,6 @@ body {
   color: #d87d15;
 }
 
-/* Mensagens de feedback (erro/sucesso) injetadas pelo JS dentro do form */
 .mensagem-form {
   font-size: 0.85rem;
   margin-top: 4px;
@@ -330,11 +326,8 @@ body {
   align-items: center;
   padding: 12px 20px;
   background: rgba(255, 159, 36, 0.08);
-  /* Removemos o border-bottom se quiser um visual mais limpo, ou mantenha se preferir */
   border-bottom: none;
-  /* Sombra bem demarcada e forte */
   box-shadow: 0 6px 8px -3px rgba(0, 0, 0, 0.35);
-  /* Essencial para a sombra aparecer por cima do conteúdo */
   position: relative;
   z-index: 10;
 }
@@ -380,7 +373,6 @@ body {
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Alterado: Flex para permitir divisão de texto e ações */
 .mensagem-sistema {
   background: rgba(255, 159, 36, 0.08);
   border-left: 3px solid #ff9f24;
@@ -423,7 +415,6 @@ body {
   gap: 10px;
 }
 
-/* Alterado: Adicionado min-width e flex ajustado para não quebrar com botão responsivo */
 .input-texto {
   flex: 1 1 auto;
   min-width: 0;
@@ -442,7 +433,6 @@ body {
   box-shadow: 0 0 10px rgba(255, 159, 36, 0.15);
 }
 
-/* Alterado: Botão agora é uma pílula (pill) e adapta o tamanho */
 .botao-acao {
   background: none;
   border: none;
@@ -467,7 +457,6 @@ body {
   color: #00335c;
 }
 
-/* Novo: Estado gravando com cor vermelha e fonte ajustada */
 .botao-acao.gravando {
   background-color: #dc3545;
   color: #ffffff;
@@ -497,7 +486,6 @@ body {
   }
 }
 
-/* Nova estrutura de ações dentro da mensagem do sistema */
 .mensagem-acoes {
   display: flex;
   justify-content: flex-end;
@@ -507,7 +495,6 @@ body {
   border-top: 1px solid rgba(255, 159, 36, 0.2);
 }
 
-/* Alterado: Botões formatados para inline-flex e margin-left removido devido ao gap */
 .listen-btn,
 .stop-btn {
   margin-left: 0;
@@ -530,4 +517,65 @@ body {
 .stop-btn {
   background-color: #97222e;
   color: white;
+}
+
+/* ========================================================
+   ANIMAÇÃO DE LOADING DA NICOLE CHIBI
+   ======================================================== */
+.loading-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.agente-loading-img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  animation: flutuarChibi 2s infinite ease-in-out;
+}
+
+/* Animação flutuante para a Nicole Chibi (estilo gravidade zero) */
+@keyframes flutuarChibi {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Estrutura dos três pontinhos de digitação sequencial */
+.loading-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  background-color: #ff9f24; /* Laranja tema das Naves do Conhecimento */
+  border-radius: 50%;
+  display: inline-block;
+  animation: piscarDots 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes piscarDots {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

@@ -68,7 +68,39 @@ function adicionarMensagemNaView(conteudo, tipo = 'sistema') {
 }
 
 
+// Funções para exibição e remoção do indicador de loading (Nicole digitando)
+function exibirLoading() {
+    if (document.getElementById('nicoleLoading')) return;
 
+    const div = document.createElement('div');
+    div.className = 'mensagem-sistema';
+    div.id = 'nicoleLoading';
+
+    const textoDiv = document.createElement('div');
+    textoDiv.className = 'mensagem-conteudo loading-container';
+    
+    // Nota: O arquivo enviado possui extensão .jpg ("Nicole Chibi.png"). 
+    // Caso use .png no ambiente, basta alterar a extensão abaixo.
+    textoDiv.innerHTML = `
+        <img src="images/Nicole Chibi.png" class="agente-loading-img" alt="Nicole digitando...">
+        <div class="loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    `;
+    
+    div.appendChild(textoDiv);
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removerLoading() {
+    const loadingEl = document.getElementById('nicoleLoading');
+    if (loadingEl) {
+        loadingEl.remove();
+    }
+}
 
 
 function exibirMensagemForm(formEl, id, mensagem, cor) {
@@ -213,11 +245,9 @@ formLogin.addEventListener('submit', async (e) => {
 function atualizarUI(email) {
     if (email) {
         const nome = email.split('@')[0];
-        const nomeFormatado = capitalize(nome)
+        const nomeFormatado = capitalize(nome);
         openLoginBtn.innerHTML = `<i class="fa-solid fa-user"></i> ${nomeFormatado}`;
         logoutBtn.style.display = 'inline-block';
-        // ✅ CORRIGIDO: esconde "Cadastre-se" enquanto o usuário está logado —
-        // antes ele continuava visível mesmo após o login.
         openCadastroHeader.style.display = 'none';
 
         chatMessages.innerHTML = `
@@ -251,19 +281,16 @@ logoutBtn.addEventListener('click', fazerLogout);
 // CADASTRO — Criar Usuário
 // =============================================
 
-// Abre o modal de cadastro a partir do botão no cabeçalho
 openCadastroHeader.addEventListener('click', () => {
     abrirModal(cadastroModal);
 });
 
-// Abre o modal de cadastro a partir do link no modal de login
 openCadastroLink.addEventListener('click', (e) => {
     e.preventDefault();
     fecharModal(loginModal);
     abrirModal(cadastroModal);
 });
 
-// Volta para o modal de login a partir do link no modal de cadastro
 voltarLoginLink.addEventListener('click', (e) => {
     e.preventDefault();
     fecharModal(cadastroModal);
@@ -282,7 +309,6 @@ cadastroModal.addEventListener('click', (e) => {
     document.getElementById(id).addEventListener('input', () => limparMensagemForm('cadastroError'));
 });
 
-// Mensagem customizada em português quando o e-mail tem formato inválido
 const cadEmailInput = document.getElementById('cadEmail');
 cadEmailInput.addEventListener('invalid', () => {
     cadEmailInput.setCustomValidity(
@@ -293,16 +319,13 @@ cadEmailInput.addEventListener('input', () => {
     cadEmailInput.setCustomValidity('');
 });
 
-// -----------------------------------------------
-// POST {API_BASE_URL}/auth/criar_usuario
-// -----------------------------------------------
 formCadastro.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const nome = document.getElementById('cadNome').value.trim();
     const email = document.getElementById('cadEmail').value.trim();
     const senha = document.getElementById('cadSenha').value;
-    const nascimento = document.getElementById('cadNascimento').value; // formato YYYY-MM-DD
+    const nascimento = document.getElementById('cadNascimento').value;
     const submitBtn = formCadastro.querySelector('button[type="submit"]');
 
     submitBtn.disabled = true;
@@ -316,7 +339,7 @@ formCadastro.addEventListener('submit', async (e) => {
                 nome: nome,
                 email: email,
                 senha: senha,
-                nascimento: nascimento, // já vem como "YYYY-MM-DD" do <input type="date">
+                nascimento: nascimento,
             }),
             credentials: 'include',
         });
@@ -330,8 +353,6 @@ formCadastro.addEventListener('submit', async (e) => {
         }
 
         if (!response.ok) {
-            // FastAPI manda erro de validação (422) como lista em data.detail,
-            // ou string simples em casos como "Email já cadastrado" (400)
             if (Array.isArray(data.detail)) {
                 console.error('Erro de validação (422):', data.detail);
                 const msgErro = data.detail
@@ -342,7 +363,6 @@ formCadastro.addEventListener('submit', async (e) => {
             throw new Error(data.detail || `Erro ${response.status}`);
         }
 
-        // ✅ Conta criada — avisa e já leva pro login preenchido
         formCadastro.reset();
         exibirMensagemForm(formCadastro, 'cadastroError', '<i class="fa-solid fa-check"></i> Conta criada! Faça login.', '#28a745');
 
@@ -378,8 +398,6 @@ fecharChatBtn.addEventListener('click', () => {
     gatilhoAgente.style.display = 'block';
 });
 
-// Fecha o chat clicando fora da janela, igual aos outros modais,
-// e reexibe o botão flutuante da agente.
 fundoChat.addEventListener('click', (e) => {
     if (e.target === fundoChat) {
         fecharModal(fundoChat);
@@ -387,9 +405,6 @@ fundoChat.addEventListener('click', (e) => {
     }
 });
 
-// -----------------------------------------------
-// GET {API_BASE_URL}/messages/historico
-// -----------------------------------------------
 async function carregarHistorico() {
     try {
         const response = await fetch(`${API_BASE_URL}/messages/historico`, {
@@ -412,7 +427,6 @@ async function carregarHistorico() {
             });
             chatMessages.scrollTop = chatMessages.scrollHeight;
         } else {
-            // Verifica se há usuário logado
             const email = localStorage.getItem('user_email');
             if (email) {
                 const nome = email.split('@')[0];
@@ -447,6 +461,9 @@ async function sendMessage() {
     adicionarMensagemNaView(text, 'usuario');
     chatInput.value = '';
 
+    // 🚀 Ativa o indicador de loading enquanto aguarda a resposta
+    exibirLoading();
+
     try {
         const response = await fetch(`${API_BASE_URL}/messages/menssagens`, {
             method: 'POST',
@@ -454,6 +471,9 @@ async function sendMessage() {
             body: JSON.stringify({ conteudo: text }),
             credentials: 'include',
         });
+
+        // 🛑 Remove o loading imediatamente após o retorno
+        removerLoading();
 
         if (!response.ok) {
             const err = await response.json();
@@ -464,6 +484,8 @@ async function sendMessage() {
         adicionarMensagemNaView(data.resposta, 'sistema');
 
     } catch (error) {
+        // 🛑 Garante que o loading seja removido mesmo em caso de falha de conexão
+        removerLoading();
         console.error('Erro ao enviar mensagem:', error);
         adicionarMensagemNaView(error.message, 'erro');
     }
@@ -502,12 +524,10 @@ if (window.SpeechSDK) {
         const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
         recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
 
-        // resultados parciais
         recognizer.recognizing = (s, e) => {
             chatInput.value = e.result.text;
         };
 
-        // resultados finais
         recognizer.recognized = (s, e) => {
             if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
                 chatInput.value = e.result.text;
@@ -547,27 +567,22 @@ if (window.SpeechSDK) {
 } else {
     console.warn("Azure Speech SDK não carregado.");
 }
-// 1. Função para limpar texto
+
 function limparTextoParaAudio(texto) {
     const semTags = texto.replace(/<[^>]*>/g, '');
     const semMarkdown = semTags.replace(/[*_`#>~-]/g, '');
     return semMarkdown.trim();
 }
 
-// 2. Síntese de voz via Azure — busca o áudio como ArrayBuffer (WAV/PCM)
-//    e reproduz via Web Audio API, contornando o bloqueio de MP3 no browser.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Estado global do player (apenas uma reprodução por vez)
+// Estado global do player
 const audioState = {
-    ctx: null,          // AudioContext reutilizado entre reproduções
-    source: null,       // BufferSourceNode ativo
-    stopBtn: null,      // botão ⏹️ visível no DOM
-    listenBtn: null,    // botão 🎧 da mensagem sendo reproduzida
-    busy: false,        // true enquanto fetch+decode estão em andamento
+    ctx: null,          
+    source: null,       
+    stopBtn: null,      
+    listenBtn: null,    
+    busy: false,        
 };
 
-// Obtém (ou cria) o AudioContext de forma compatível com Safari
 function getAudioContext() {
     if (!audioState.ctx || audioState.ctx.state === 'closed') {
         audioState.ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -575,7 +590,6 @@ function getAudioContext() {
     return audioState.ctx;
 }
 
-// Para qualquer reprodução em curso e limpa o estado global
 function pararAudioAtual() {
     if (audioState.source) {
         try { audioState.source.stop(); } catch (_) {}
@@ -594,14 +608,11 @@ function pararAudioAtual() {
     }
 }
 
-// Sintetiza `text` via REST do Azure e devolve um ArrayBuffer com o áudio WAV
 async function sintetizarParaBuffer(text) {
-    // Busca token de acesso
     const tokenRes = await fetch(`${API_BASE_URL}/messages/speech-token`);
     if (!tokenRes.ok) throw new Error(`Falha ao obter token: ${tokenRes.status}`);
     const { token, region } = await tokenRes.json();
 
-    // Endpoint TTS REST — devolve áudio diretamente, sem SDK no browser
     const ttsUrl = `https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`;
 
     const ssml = `
@@ -615,7 +626,6 @@ async function sintetizarParaBuffer(text) {
         method: 'POST',
         headers: {
             'Authorization'   : `Bearer ${token}`,
-            // Riff-16khz-16bit-mono-pcm → WAV puro, suportado por todos os browsers
             'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm',
             'Content-Type'    : 'application/ssml+xml',
         },
@@ -626,16 +636,12 @@ async function sintetizarParaBuffer(text) {
     return audioRes.arrayBuffer();
 }
 
-// 3. speakText — ponto de entrada chamado pelo botão 🎧 Escutar
 async function speakText(text, parentDiv, listenBtn) {
-    // Bloqueia cliques sobrepostos enquanto fetch/decode estão em andamento
     if (audioState.busy) return;
     audioState.busy = true;
 
-    // Para qualquer áudio que esteja tocando agora
     pararAudioAtual();
 
-    // Atualiza o botão desta mensagem para "carregando"
     if (listenBtn) {
         listenBtn.disabled = true;
         listenBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Carregando...';
@@ -646,7 +652,6 @@ async function speakText(text, parentDiv, listenBtn) {
     try {
         const arrayBuffer = await sintetizarParaBuffer(text);
         const ctx = getAudioContext();
-        // Resume o contexto (necessário após interação do usuário no Chrome)
         if (ctx.state === 'suspended') await ctx.resume();
         buffer = await ctx.decodeAudioData(arrayBuffer);
     } catch (err) {
@@ -660,22 +665,18 @@ async function speakText(text, parentDiv, listenBtn) {
         return;
     }
 
-    // Libera o lock — a partir daqui a reprodução é síncrona (sem await)
     audioState.busy = false;
 
-    // Cria o nó de reprodução
     const ctx = getAudioContext();
     const source = ctx.createBufferSource();
     source.buffer = buffer;
     source.connect(ctx.destination);
     audioState.source = source;
 
-    // Atualiza botão Escutar para "Reproduzindo"
     if (listenBtn) {
         listenBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Reproduzindo...';
     }
 
-    // Botão ⏹️ Parar — fica visível enquanto o áudio toca
     const stopBtn = document.createElement('button');
     stopBtn.innerHTML = '<i class="fa-solid fa-stop"></i> Parar';
     stopBtn.className = "stop-btn";
@@ -684,18 +685,15 @@ async function speakText(text, parentDiv, listenBtn) {
         console.log("Áudio interrompido pelo usuário.");
     });
     
-    // Adiciona o botão Parar dentro da div separada (.mensagem-acoes)
     const acoesDiv = parentDiv.querySelector('.mensagem-acoes');
     if (acoesDiv) {
         acoesDiv.appendChild(stopBtn);
     } else {
-        parentDiv.appendChild(stopBtn); // Fallback caso não encontre
+        parentDiv.appendChild(stopBtn);
     }
     audioState.stopBtn = stopBtn;
 
-    // Callback quando o áudio termina naturalmente
     source.onended = () => {
-        // Só limpa se ainda for a source ativa (não foi parada manualmente)
         if (audioState.source === source) {
             pararAudioAtual();
             console.log("Áudio finalizado.");
