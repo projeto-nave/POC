@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Equipe - Naves do Conhecimento</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           ESTRUTURA GERAL
+           ========================================= */
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-purple: #b800ff;
+            --dark-bg: #050510;
+            --glass-bg: rgba(5, 5, 16, 0.6);
+            --text-main: #ffffff;
+            --text-muted: #a0c0d0;
+            --gold-accent: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-bg);
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--text-main);
+            overflow: hidden; /* Previne scroll indesejado */
+            user-select: none;
+        }
+
+        /* =========================================
+           FUNDO E CANVAS
+           ========================================= */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* Deixa os cliques passarem pelo canvas do cursor */
+        }
+
+        #bg-canvas {
+            z-index: 1;
+        }
+
+        #cursor-canvas {
+            z-index: 100; /* Partículas do cursor sobre quase tudo */
+        }
+
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(5,5,16,0.8) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           TÍTULO E UI
+           ========================================= */
+        header {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: fadeInDown 2s ease-out;
+            pointer-events: none;
+        }
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* =========================================
+           CONTAINER PRINCIPAL E VÍDEO
+           ========================================= */
+        .universe-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .center-portal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 35vmin;
+            height: 35vmin;
+            min-width: 250px;
+            min-height: 250px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            /* Efeito holográfico/neon */
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4), 
+                        inset 0 0 20px rgba(184, 0, 255, 0.4);
+            border: 2px solid rgba(0, 243, 255, 0.5);
+            animation: portalBreathing 4s infinite alternate ease-in-out;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .center-portal video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           EQUIPE (ORBITA)
+           ========================================= */
+        .orbit-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 81px;
+            left: 0;
+            pointer-events: none; /* Permite clicar através do container */
+            z-index: 80;
+        }
+
+        .member-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto; /* Reativa cliques apenas nos membros */
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: floatMember 6s infinite ease-in-out alternate;
+            z-index: 90;
+        }
+
+        /* Atrasos nas animações de flutuação para não ser sincronizado */
+        .member-wrapper:nth-child(1) { animation-delay: 0s; }
+        .member-wrapper:nth-child(2) { animation-delay: 1s; }
+        .member-wrapper:nth-child(3) { animation-delay: 2s; }
+        .member-wrapper:nth-child(4) { animation-delay: 1.5s; }
+        .member-wrapper:nth-child(5) { animation-delay: 0.5s; }
+
+        .member-photo {
+            width: 10vmin;
+            height: 10vmin;
+            min-width: 80px;
+            min-height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .member-name {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            text-shadow: 0 0 5px var(--neon-blue);
+            transition: all 0.3s ease;
+            pointer-events: none; /* Garante que o texto não "roube" o clique na foto */
+        }
+
+        /* Efeitos de Hover */
+        .member-wrapper:hover {
+            transform: translate(-50%, -50%) scale(1.15) !important;
+            z-index: 100;
+        }
+
+        .member-wrapper:hover .member-photo {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 30px var(--neon-purple), inset 0 0 10px var(--neon-purple);
+        }
+
+        .member-wrapper:hover .member-name {
+            color: var(--neon-purple);
+            border-color: var(--neon-purple);
+            text-shadow: 0 0 8px var(--neon-purple);
+        }
+
+        /* =========================================
+           MODAL / PAINEL DE INFORMAÇÕES
+           ========================================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px); /* Efeito Glassmorphism */
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(5,5,16,0.9) 0%, rgba(20,20,40,0.9) 100%);
+            border: 1px solid var(--neon-blue);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--neon-purple);
+        }
+
+        .modal-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .modal-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--neon-blue);
+            margin-bottom: 5px;
+        }
+
+        .modal-role {
+            font-size: 1.2rem;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            text-align: justify;
+            font-family: sans-serif;
+        }
+
+        /* Controles de Áudio */
+        .audio-control {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            z-index: 50;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .audio-control:hover {
+            background: rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* =========================================
+           ANIMAÇÕES KEYFRAMES
+           ========================================= */
+        @keyframes portalBreathing {
+            0% { box-shadow: 0 0 20px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(184, 0, 255, 0.2); }
+            100% { box-shadow: 0 0 50px rgba(0, 243, 255, 0.7), inset 0 0 30px rgba(184, 0, 255, 0.6); }
+        }
+
+        @keyframes floatMember {
+            0% { margin-top: 0px; }
+            100% { margin-top: -15px; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translate(-50%, -30px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        /* =========================================
+           RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8rem; }
+            .center-portal { width: 40vmin; height: 40vmin; }
+            .member-photo { width: 70px; height: 70px; min-width: 0; min-height: 0; }
+            .member-name { font-size: 0.9rem; padding: 2px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-audio" loop>
+        <source src="galaxia.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="audio-control" id="audio-btn">
+        <span id="audio-icon">🔇</span> Iniciar Áudio - Créditos <a href="https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-low-spaceship-rumble-195722/" style="color: #ffffff;" target="_blank">Diff Style</a> - <a href="https://github.com/projeto-nave/POC" style="color: #ffffff;" target="_blank">GITHUB do projeto</a>
+    </button>
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="bg-overlay"></div>
+
+    <header>
+        <h1>A Equipe</h1>
+        <p>Agente de IA Nicole das Naves</p>
+    </header>
+
+    <div class="universe-container">
+        
+        <div class="center-portal">
+            <video id="main-video" autoplay loop muted playsinline>
+                <source src="video.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos HTML5.
+            </video>
+        </div>
+
+        <div class="orbit-container" id="orbit-container">
+            </div>
+
+    </div>
+
+    <canvas id="cursor-canvas"></canvas>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="close-modal">&times;</span>
+            <img src="" alt="Foto" class="modal-photo" id="modal-img">
+            <h2 class="modal-name" id="modal-name">Nome</h2>
+            <div class="modal-role" id="modal-role">Cargo</div>
+            <p class="modal-desc" id="modal-desc">Descrição detalhada do integrante...</p>
+        </div>
+    </div>
+
+
+    <script>
+        /* =========================================
+           DADOS DA EQUIPE
+           ========================================= */
+        const teamData = [
+            {
+                id: "marina",
+                name: "Marina Micas",
+                role: "Mentora, Gestora, Designer e Front-End",
+                desc: "Responsável pela arquitetura do Foundry, planejamento das tarefas e estratégia do agente anfitrião, atuando na supervisão técnica e validação do ambiente. Garante a integridade técnica da solução e a documentação para a continuidade futura do projeto pela SMCT.",
+                img: "Marina Micas.jpg"
+            },
+            {
+                id: "felipe",
+                name: "Felipe",
+                role: "DEV 1 - Backend/Integração",
+                desc: "Programação base, criação da API de diálogo, gerenciamento de autenticação e integração técnica com o Microsoft Foundry e serviços externos.",
+                img: "Felipe.jpg"
+            },
+            {
+                id: "lucas",
+                name: "Lucas",
+                role: "TESTADOR - Analista de Testes e Conversação",
+                desc: "Validação de conversação dos agentes em conformidade com LGPD e ECA, curadoria e segurança da Nicole.",
+                img: "Lucas.jpg"
+            },
+            {
+                id: "milena",
+                name: "Milena",
+                role: "PESQUISADORA - Analista de Testes, Conversação e Pesquisadora",
+                desc: "Roteiros e validação de conversas dos agentes, Pesquisa de conformidade com LGPD e ECA, curadoria e segurança da Nicole.",
+                img: "Milena.jpg"
+            },
+            {
+                id: "joao",
+                name: "João Pedro",
+                role: "DEV 2 - Frontend, UX e UI Acessível",
+                desc: "Banco de Dados, Interface conversacional, acessibilidade e usabilidade para usuários com baixa alfabetização digital.",
+                img: "João Pedro.jpg"
+            }
+        ];
+
+        /* =========================================
+           ORGANIZAÇÃO CIRCULAR DA EQUIPE
+           ========================================= */
+        function positionTeam() {
+            const container = document.getElementById('orbit-container');
+            container.innerHTML = ''; // Limpa antes de redesenhar
+            
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            // Raio de distância do centro. Responsivo com base no tamanho da tela.
+            // Usa a menor dimensão (largura ou altura) para garantir que caibam na tela.
+            const minDimension = Math.min(window.innerWidth, window.innerHeight);
+            const radius = minDimension * 0.35; // 35% do tamanho da tela
+            
+            // Ângulos pré-definidos para criar uma meia-lua / círculo em volta do vídeo
+            // Marina (0) no topo absoluto (-90 graus em trigonometria)
+            // Os ângulos estão em radianos.
+            const anglesDeg = [
+                -90,  // Marina (Topo)
+                -15,  // Felipe (Direita Topo)
+                 55,  // Lucas (Direita Baixo)
+                125,  // Milena (Esquerda Baixo)
+                195   // João Pedro (Esquerda Topo)
+            ];
+
+            teamData.forEach((member, index) => {
+                const angleRad = anglesDeg[index] * (Math.PI / 180);
+                
+                // Cálculo de posição X e Y (Trigonometria básica)
+                const x = centerX + radius * Math.cos(angleRad);
+                const y = centerY + radius * Math.sin(angleRad);
+
+                // Criar elementos no DOM
+                const wrapper = document.createElement('div');
+                wrapper.className = 'member-wrapper';
+                // Define a posição absoluta via CSS left/top
+                wrapper.style.left = `${x}px`;
+                wrapper.style.top = `${y}px`;
+                
+                // Adiciona evento de clique para abrir o Modal de forma robusta
+                wrapper.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que o clique se perca no fundo
+                    openModal(member);
+                });
+
+                const img = document.createElement('img');
+                img.src = encodeURI(member.img);
+                img.alt = member.name;
+                img.className = 'member-photo';
+                // Fallback caso a imagem não carregue
+                img.onerror = function() { this.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZmlsbD0iI2ZmZiIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Rm90bzwvdGV4dD48L3N2Zz4=' };
+
+                const nameTag = document.createElement('div');
+                nameTag.className = 'member-name';
+                nameTag.textContent = member.name;
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(nameTag);
+                container.appendChild(wrapper);
+            });
+        }
+
+        // Reposiciona caso a janela mude de tamanho
+        window.addEventListener('resize', positionTeam);
+        // Inicializa as posições
+        positionTeam();
+
+        /* =========================================
+           INTERAÇÕES (MODAL)
+           ========================================= */
+        const modalElement = document.getElementById('modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        function openModal(member) {
+            document.getElementById('modal-img').src = encodeURI(member.img);
+            document.getElementById('modal-name').textContent = member.name;
+            document.getElementById('modal-role').textContent = member.role;
+            document.getElementById('modal-desc').textContent = member.desc;
+            
+            modalElement.classList.add('active');
+        }
+
+        function closeModal() {
+            modalElement.classList.remove('active');
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modalElement.addEventListener('click', (e) => {
+            if (e.target === modalElement) closeModal(); // Fecha ao clicar fora
+        });
+
+        // Forçar reprodução do vídeo para evitar bloqueios do navegador
+        window.addEventListener('load', () => {
+            const videoElement = document.getElementById('main-video');
+            if (videoElement) {
+                videoElement.muted = true; // Garante que está mutado para o autoplay funcionar
+                const playPromise = videoElement.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Autoplay do vídeo prevenido pelo navegador:", error);
+                    });
+                }
+            }
+        });
+
+
+        /* =========================================
+           ÁUDIO AMBIENTE
+           ========================================= */
+        const audio = document.getElementById('bg-audio');
+        const audioBtn = document.getElementById('audio-btn');
+        const audioIcon = document.getElementById('audio-icon');
+        let isAudioPlaying = false;
+
+        audioBtn.addEventListener('click', () => {
+            if (isAudioPlaying) {
+                audio.pause();
+                audioIcon.textContent = '🔇';
+                audioBtn.innerHTML = '<span id="audio-icon">🔇</span> Iniciar Áudio - Créditos <a href="https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-low-spaceship-rumble-195722/" style="color: #ffffff;" target="_blank">Diff Style</a>';
+            } else {
+                // Tratamento de erro caso o arquivo não exista localmente
+                let playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        audioIcon.textContent = '🔊';
+                        audioBtn.innerHTML = '<span id="audio-icon">🔊</span> Pausar Áudio - Créditos <a href="https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-low-spaceship-rumble-195722/" style="color: #ffffff;" target="_blank">Diff Style</a> - <a href="https://github.com/projeto-nave/POC" style="color: #ffffff;" target="_blank">GITHUB do projeto</a>';
+                    })
+                    .catch(error => {
+                        console.log("Arquivo de áudio não encontrado ou bloqueado pelo navegador.");
+                        audioBtn.innerHTML = '⚠️ Áudio Ausente';
+                        setTimeout(() => {
+                           audioBtn.innerHTML = '<span id="audio-icon">🔇</span> Iniciar Áudio - Créditos <a href="https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-low-spaceship-rumble-195722/" style="color: #ffffff;" target="_blank">Diff Style</a>'; 
+                        }, 2000);
+                    });
+                }
+            }
+            isAudioPlaying = !isAudioPlaying;
+        });
+
+
+        /* =========================================
+           FUNDO ESPACIAL (ESTRELAS CANVAS)
+           ========================================= */
+        const bgCanvas = document.getElementById('bg-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        
+        let width, height;
+        let stars = [];
+
+        function initBgCanvas() {
+            width = bgCanvas.width = window.innerWidth;
+            height = bgCanvas.height = window.innerHeight;
+            stars = [];
+            // Cria 200 estrelas
+            for (let i = 0; i < 200; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.5,
+                    vx: Math.floor(Math.random() * 50) - 25,
+                    vy: Math.floor(Math.random() * 50) - 25,
+                    alpha: Math.random(),
+                    dAlpha: (Math.random() * 0.05) - 0.025
+                });
+            }
+        }
+
+        function drawBgCanvas() {
+            bgCtx.clearRect(0, 0, width, height);
+            
+            stars.forEach(star => {
+                // Piscar das estrelas
+                star.alpha += star.dAlpha;
+                if(star.alpha <= 0.1 || star.alpha >= 1) star.dAlpha = -star.dAlpha;
+                
+                // Movimento sutil
+                star.x += star.vx * 0.005;
+                star.y += star.vy * 0.005;
+
+                // Reposiciona se sair da tela
+                if(star.x < 0 || star.x > width) star.vx = -star.vx;
+                if(star.y < 0 || star.y > height) star.vy = -star.vy;
+
+                bgCtx.beginPath();
+                bgCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                bgCtx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+                bgCtx.fill();
+            });
+
+            requestAnimationFrame(drawBgCanvas);
+        }
+
+        window.addEventListener('resize', initBgCanvas);
+        initBgCanvas();
+        drawBgCanvas();
+
+
+        /* =========================================
+           PARTÍCULAS DO CURSOR
+           ========================================= */
+        const cursorCanvas = document.getElementById('cursor-canvas');
+        const cursorCtx = cursorCanvas.getContext('2d');
+        let cursorParticles = [];
+        
+        let mouse = { x: -100, y: -100 }; // Inicializa fora da tela
+
+        function initCursorCanvas() {
+            cursorCanvas.width = window.innerWidth;
+            cursorCanvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', initCursorCanvas);
+        initCursorCanvas();
+
+        // Rastreia o mouse
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+
+            // Adiciona novas partículas no movimento
+            for (let i = 0; i < 3; i++) {
+                cursorParticles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        // Otimização: remove partículas se sair da tela para não poluir
+        window.addEventListener('mouseout', () => {
+             mouse.x = -100;
+             mouse.y = -100;
+        });
+
+        // Classe da Partícula
+        class Particle {
+            constructor(x, y) {
+                this.x = x + (Math.random() * 20 - 10);
+                this.y = y + (Math.random() * 20 - 10);
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                // Cores entre Ciano e Roxo
+                this.color = Math.random() > 0.5 ? '#00f3ff' : '#b800ff';
+                this.life = 100; // Tempo de vida da partícula
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y -= this.speedY; // Sobe levemente
+                this.size *= 0.95; // Encolhe gradualmente
+                this.life -= 2;
+            }
+
+            draw() {
+                cursorCtx.globalCompositeOperation = 'lighter'; // Efeito de brilho ao sobrepor
+                cursorCtx.fillStyle = this.color;
+                cursorCtx.beginPath();
+                cursorCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                cursorCtx.fill();
+                
+                // Glow
+                cursorCtx.shadowBlur = 10;
+                cursorCtx.shadowColor = this.color;
+            }
+        }
+
+        function animateCursorParticles() {
+            cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
+            
+            for (let i = 0; i < cursorParticles.length; i++) {
+                cursorParticles[i].update();
+                cursorParticles[i].draw();
+
+                // Remove partículas mortas
+                if (cursorParticles[i].life <= 0 || cursorParticles[i].size <= 0.2) {
+                    cursorParticles.splice(i, 1);
+                    i--;
+                }
+            }
+            
+            requestAnimationFrame(animateCursorParticles);
+        }
+
+        animateCursorParticles();
+
+    </script>
+</body>
+</html>
