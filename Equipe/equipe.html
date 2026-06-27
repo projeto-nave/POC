@@ -77,7 +77,7 @@
             position: fixed;
             top: 10px;
             left: 10px;
-            z-index: 10;
+            z-index: 5;
             text-align: left;
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -203,6 +203,21 @@
             pointer-events: none; /* Garante que o texto não "roube" o clique na foto */
         }
 
+        /* ESTILIZAÇÃO DO LINK DO MEMBRO (NOVO) */
+        .member-link {
+            margin-top: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--neon-blue);
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
         /* Efeitos de Hover */
         .member-wrapper:hover {
             transform: translate(-50%, -50%) scale(1.15) !important;
@@ -218,6 +233,12 @@
             color: var(--neon-purple);
             border-color: var(--neon-purple);
             text-shadow: 0 0 8px var(--neon-purple);
+        }
+
+        .member-wrapper:hover .member-link {
+            color: var(--neon-purple);
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple);
         }
 
         /* =========================================
@@ -332,6 +353,7 @@
             align-items: center;
             gap: 10px;
             transition: all 0.3s;
+            margin-left: 15px;
         }
 
         .audio-control:hover {
@@ -365,6 +387,7 @@
             .center-portal { width: 40vmin; height: 40vmin; }
             .member-photo { width: 70px; height: 70px; min-width: 0; min-height: 0; }
             .member-name { font-size: 0.9rem; padding: 2px 8px; }
+            .member-link { font-size: 0.75rem; padding: 1px 8px; }
         }
     </style>
 </head>
@@ -396,7 +419,7 @@
         </div>
 
         <div class="orbit-container" id="orbit-container">
-            </div>
+        </div>
 
     </div>
 
@@ -423,35 +446,40 @@
                 name: "Marina Micas",
                 role: "Mentora, Gestora, Designer e Front-End",
                 desc: "Responsável pela arquitetura do Foundry, planejamento das tarefas e estratégia do agente anfitrião, atuando na supervisão técnica e validação do ambiente. Garante a integridade técnica da solução e a documentação para a continuidade futura do projeto pela SMCT.",
-                img: "Marina Micas.jpg"
+                img: "Marina Micas.jpg",
+                link: "https://www.linkedin.com/in/marinamicas/"
             },
             {
                 id: "felipe",
                 name: "Felipe",
                 role: "DEV 1 - Backend/Integração",
                 desc: "Programação base, criação da API de diálogo, gerenciamento de autenticação e integração técnica com o Microsoft Foundry e serviços externos.",
-                img: "Felipe.jpg"
+                img: "Felipe.jpg",
+                link: "https://www.linkedin.com/in/felipe-g-downs/"
             },
             {
                 id: "lucas",
                 name: "Lucas",
                 role: "TESTADOR - Analista de Testes e Conversação",
                 desc: "Validação de conversação dos agentes em conformidade com LGPD e ECA, curadoria e segurança da Nicole.",
-                img: "Lucas.jpg"
+                img: "Lucas.jpg",
+                link: "https://www.linkedin.com/in/lucasgasparpaiva/"
             },
             {
                 id: "milena",
                 name: "Milena",
                 role: "PESQUISADORA - Analista de Testes, Conversação e Pesquisadora",
                 desc: "Roteiros e validação de conversas dos agentes, Pesquisa de conformidade com LGPD e ECA, curadoria e segurança da Nicole.",
-                img: "Milena.jpg"
+                img: "Milena.jpg",
+                link: "https://www.linkedin.com/in/milena-jesus-/"
             },
             {
                 id: "joao",
                 name: "João Pedro",
                 role: "DEV 2 - Frontend, UX e UI Acessível",
                 desc: "Banco de Dados, Interface conversacional, acessibilidade e usabilidade para usuários com baixa alfabetização digital.",
-                img: "João Pedro.jpg"
+                img: "João Pedro.jpg",
+                link: "https://www.linkedin.com/in/joaopedrofrancisco/"
             }
         ];
 
@@ -466,13 +494,10 @@
             const centerY = window.innerHeight / 2;
             
             // Raio de distância do centro. Responsivo com base no tamanho da tela.
-            // Usa a menor dimensão (largura ou altura) para garantir que caibam na tela.
             const minDimension = Math.min(window.innerWidth, window.innerHeight);
             const radius = minDimension * 0.35; // 35% do tamanho da tela
             
             // Ângulos pré-definidos para criar uma meia-lua / círculo em volta do vídeo
-            // Marina (0) no topo absoluto (-90 graus em trigonometria)
-            // Os ângulos estão em radianos.
             const anglesDeg = [
                 -90,  // Marina (Topo)
                 -15,  // Felipe (Direita Topo)
@@ -514,6 +539,23 @@
 
                 wrapper.appendChild(img);
                 wrapper.appendChild(nameTag);
+
+                // ADICIONANDO O LINK DO MEMBRO DINAMICAMENTE (NOVO)
+                if (member.link) {
+                    const memberLink = document.createElement('a');
+                    memberLink.href = member.link;
+                    memberLink.target = '_blank';
+                    memberLink.className = 'member-link';
+                    memberLink.textContent = 'LinkedIn';
+
+                    // Evita abrir o modal ao clicar diretamente no link do perfil
+                    memberLink.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+
+                    wrapper.appendChild(memberLink);
+                }
+
                 container.appendChild(wrapper);
             });
         }
