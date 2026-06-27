@@ -10,8 +10,8 @@ Este repositório contém a demonstração dos itens executados no MVP da **Agen
 | Nome | Atuação nesse projeto | Cargo e local | Contato |
 | :--- | :--- | :--- | :--- |
 | **Marina Micas Jardim** | Mentora, gestora, designer e desenvolvedora front-end. | Analista de Projetos da Secretaria Municipal de Ciência, Tecnologia e Inovação do Rio de Janeiro (SMCT). | [LinkedIn](https://www.linkedin.com/in/marinamicas/) |
-| **Felipe Gijsen Downs** | Desenvolvedor back-end. | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | xxx |
-| **João Pedro Francisco da Rocha** | Desenvolvedor front-end, back-end e designer. | Aluno do curso de Ciência da Computação da Unicarioca. | xxx |
+| **Felipe Gijsen Downs** | Desenvolvedor back-end. | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | [LinkedIn](https://www.linkedin.com/in/felipe-g-downs/) |
+| **João Pedro Francisco da Rocha** | Desenvolvedor front-end, back-end e designer. | Aluno do curso de Ciência da Computação da Unicarioca. | [LinkedIn](https://www.linkedin.com/in/joaopedrofrancisco/) |
 | **Milena Jesus** | Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo, pesquisa de conformidade com a LGPD e o ECA, e garantia da qualidade e segurança das respostas da inteligência artificial (Nicole). | Aluna do curso de Marketing da Unicarioca. | [LinkedIn](https://www.linkedin.com/in/milena-jesus-/) |
 | **Lucas Gaspar** | Analista de Testes e Conversação, responsável pela validação de fluxos dialógicos, curadoria de conteúdo e garantia da qualidade das respostas da inteligência artificial (Nicole). | Aluno do curso de Análise e Desenvolvimento de Sistemas da Unicarioca. | [LinkedIn](https://www.linkedin.com/in/lucasgasparpaiva/) |
 
