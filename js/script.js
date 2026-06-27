@@ -390,13 +390,15 @@ gatilhoAgente.addEventListener('click', (e) => {
     e.preventDefault();
     abrirModal(fundoChat);
     gatilhoAgente.style.display = 'none';
-    carregarHistorico();
+    carregarHistorico(); // sempre recarrega ao abrir
 });
 
 fecharChatBtn.addEventListener('click', () => {
     fecharModal(fundoChat);
     gatilhoAgente.style.display = 'block';
+    // não chama carregarHistorico aqui
 });
+
 
 fundoChat.addEventListener('click', (e) => {
     if (e.target === fundoChat) {
