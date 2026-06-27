@@ -553,7 +553,7 @@ if (window.SpeechSDK) {
         if (!recognizer) {
             await initRecognizer();
             micBtn.classList.add('gravando');
-            micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i> Gravando...';
+            micBtn.innerHTML = '<i class="fa-solid fa-square"></i>';
             recognizer.startContinuousRecognitionAsync();
         } else {
             recognizer.stopContinuousRecognitionAsync(() => {
