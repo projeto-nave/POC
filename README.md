@@ -1,4 +1,4 @@
-# Agente IA Nicole das Naves do Conhecimento, Naves Satélite e Navezinhas Cariocas
+# Agente de IA Nicole das Naves do Conhecimento, Naves Satélite e Navezinhas Cariocas
 
 <img src="https://github.com/projeto-nave/POC/blob/main/images/Agente%20Nicole.png" alt="Agente Nicole" width="200" height="200">
 
