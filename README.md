@@ -3,7 +3,7 @@
 <img src="https://github.com/projeto-nave/POC/blob/main/images/Agente%20Nicole.png" alt="Agente Nicole" width="200" height="200">
 
 
-Este repositório contém a demonstração dos itens executados no MVP da **Agente Nicole**, uma Inteligência Artificial Anfitriã desenvolvida pelo **Grupo 10** para as Naves do Conhecimento, Naves Satélite e Navezinhas Cariocas do Programa Agent.IA da Unicarioca.
+Este repositório contém a demonstração dos itens executados no MVP da **Agente Nicole**, uma Inteligência Artificial Anfitriã desenvolvida pelo **Grupo 10** para as Naves do Conhecimento, Naves Satélite e Navezinhas Cariocas da Secretaria Municipal de Ciência, Tecnologia e Inovação do Rio de Janeiro do Programa Agent.IA da Unicarioca.
 
 ## A Equipe
 
