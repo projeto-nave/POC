@@ -33,7 +33,7 @@ A **Agente Nicole** é uma IA anfitriã já executada e funcional, construída s
 ## Demonstração do Back-end Executado
 Backend de uma aplicação de agente de IA com autenticação JWT, histórico de chat, perfis de usuário e controle de permissões. Construído com FastAPI, SQLAlchemy e MySQL:
 
-**Link do api-agente-ia:** [https://projeto-nave.github.io/POC/](https://github.com/projeto-nave/api-agente-ia)
+**Link do api-agente-ia:** [https://github.com/projeto-nave/api-agente-ia](https://github.com/projeto-nave/api-agente-ia)
 
 ## Demonstração do Front-end Executado
 A interface de teste apresenta o ambiente web responsivo do portal da Nave do Conhecimento:
