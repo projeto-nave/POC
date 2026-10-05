@@ -30,6 +30,11 @@ A **Agente Nicole** é uma IA anfitriã já executada e funcional, construída s
 * **Escalabilidade Sustentável:** Operação 24/7 na nuvem com custo unitário por atendimento reduzido.
 * **Inteligência Estratégica:** A IA atua como um sensor em tempo real, capturando dados estruturados que podem alimentar painéis e dashboards de BI, embasando decisões assertivas da gestão pública.
 
+## Demonstração do Back-end Executado
+Backend de uma aplicação de agente de IA com autenticação JWT, histórico de chat, perfis de usuário e controle de permissões. Construído com FastAPI, SQLAlchemy e MySQL:
+
+**Link do api-agente-ia:** [https://projeto-nave.github.io/POC/](https://github.com/projeto-nave/api-agente-ia)
+
 ## Demonstração do Front-end Executado
 A interface de teste apresenta o ambiente web responsivo do portal da Nave do Conhecimento:
 * A página principal (`index.html`) conta com uma integração direta através de uma **janela flutuante de chat**.
